@@ -31,7 +31,7 @@ class _HomePageState extends State<HomePage> {
                   height: MediaQuery.of(context).size.height/9,
                   child: Card(
                     child: ListTile(
-                      title: Text(document['nama']),
+                      title: Text('aku adalah '+document['nama']),
                       onTap: ()=>print(Text(document['nama'])),
                     ),
                   ),
