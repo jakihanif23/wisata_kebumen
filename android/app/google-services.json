@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "249041624977",
+    "project_id": "wisatakebumen-7c88e",
+    "storage_bucket": "wisatakebumen-7c88e.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:249041624977:android:ffa24c51d9b82bafdac430",
+        "android_client_info": {
+          "package_name": "com.example.wisata_kebumen"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "249041624977-aveva1e9ibs95k95l2mj4srbrgo71ol6.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD4MEbktp_DrLfT3AAyf2udx9ud8AEM7wE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "249041624977-aveva1e9ibs95k95l2mj4srbrgo71ol6.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
