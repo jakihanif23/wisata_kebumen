@@ -1,14 +1,14 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
-class HomePage extends StatefulWidget {
-  const HomePage({Key? key}) : super(key: key);
+class WisataLists extends StatefulWidget {
+  const WisataLists({Key? key}) : super(key: key);
 
   @override
-  _HomePageState createState() => _HomePageState();
+  _WisataListsState createState() => _WisataListsState();
 }
 
-class _HomePageState extends State<HomePage> {
+class _WisataListsState extends State<WisataLists> {
 
   final _stream = FirebaseFirestore.instance.collection('wisata').snapshots();
 
@@ -31,7 +31,7 @@ class _HomePageState extends State<HomePage> {
                   height: MediaQuery.of(context).size.height/9,
                   child: Card(
                     child: ListTile(
-                      title: Text('aku adalah '+document['nama']),
+                      title: Text(document['nama']),
                       onTap: ()=>print(Text(document['nama'])),
                     ),
                   ),

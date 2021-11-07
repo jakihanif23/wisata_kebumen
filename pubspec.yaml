@@ -30,6 +30,7 @@ dependencies:
   google_fonts: ^2.1.0
   cloud_firestore: ^2.5.3
   firebase_core: ^1.7.0
+  custom_line_indicator_bottom_navbar: ^0.0.7
   flutter:
     sdk: flutter
 
