@@ -24,7 +24,8 @@ class DetailRestoran extends StatelessWidget {
                 children: [
                   Text(restoranDocument!['nama']),
                   SizedBox(height: 20),
-                  Text(restoranDocument['description'])
+                  Text(restoranDocument['description']),
+                  SizedBox(height: 20)
                 ],
               ),
             ),
