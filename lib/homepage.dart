@@ -1,8 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:custom_line_indicator_bottom_navbar/custom_line_indicator_bottom_navbar.dart';
-import 'package:wisata_kebumen/restoranlist.dart';
-import 'package:wisata_kebumen/wisatalist.dart';
+import 'package:wisata_kebumen/restoran/restoranlist.dart';
+import 'package:wisata_kebumen/wisata/wisatalist.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);

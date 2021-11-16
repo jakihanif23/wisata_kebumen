@@ -1,24 +1,24 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:wisata_kebumen/wisata/detailwisata.dart';
+import 'package:wisata_kebumen/wisata/wisatamodel.dart';
 
-import 'detailrestoran.dart';
-
-class RestoranLists extends StatefulWidget {
-  const RestoranLists({Key? key}) : super(key: key);
+class WisataLists extends StatefulWidget {
+  const WisataLists({Key? key}) : super(key: key);
 
   @override
-  _RestoranListsState createState() => _RestoranListsState();
+  _WisataListsState createState() => _WisataListsState();
 }
 
-class _RestoranListsState extends State<RestoranLists> {
+class _WisataListsState extends State<WisataLists> {
 
-  final _stream1 = FirebaseFirestore.instance.collection('restoran').snapshots();
+  final _stream = ReadData();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: StreamBuilder(
-        stream: _stream1,
+        stream: _stream.getStreamWisata(),
         builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot){
           if(!snapshot.hasData){
             return Center(
@@ -35,7 +35,10 @@ class _RestoranListsState extends State<RestoranLists> {
                     child: ListTile(
                       title: Text(document['nama']),
                       onTap: (){
-                        Navigator.push(context, MaterialPageRoute(builder: (context) => DetailRestoran(index: document['nama'])));
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => DetailWisata(index: document['nama']))
+                        );
                       },
                     ),
                   ),
