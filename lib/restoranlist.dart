@@ -1,6 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
+import 'detailrestoran.dart';
+
 class RestoranLists extends StatefulWidget {
   const RestoranLists({Key? key}) : super(key: key);
 
@@ -32,7 +34,9 @@ class _RestoranListsState extends State<RestoranLists> {
                   child: Card(
                     child: ListTile(
                       title: Text(document['nama']),
-                      onTap: ()=>print(Text(document['nama'])),
+                      onTap: (){
+                        Navigator.push(context, MaterialPageRoute(builder: (context) => DetailRestoran(index: document['nama'])));
+                      },
                     ),
                   ),
                 ),
