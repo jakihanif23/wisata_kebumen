@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:wisata_kebumen/detailwisata.dart';
 
 class WisataLists extends StatefulWidget {
   const WisataLists({Key? key}) : super(key: key);
@@ -32,7 +33,12 @@ class _WisataListsState extends State<WisataLists> {
                   child: Card(
                     child: ListTile(
                       title: Text(document['nama']),
-                      onTap: ()=>print(Text(document['nama'])),
+                      onTap: (){
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => DetailWisata(index: document['nama']))
+                        );
+                      },
                     ),
                   ),
                 ),
