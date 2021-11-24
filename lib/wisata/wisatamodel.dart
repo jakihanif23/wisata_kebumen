@@ -11,3 +11,15 @@ class ReadData{
     return collectionRestoran.snapshots();
   }
 }
+
+class Wisata{
+  String nama;
+  String foto;
+  List<String> pictures = <String>[];
+
+  Wisata(this.nama, this.foto, List<String> pictures);
+
+  Wisata.fromSnapshot(DocumentSnapshot snapshot)
+  : nama = snapshot['nama'], foto = snapshot['foto'], pictures = List.from(snapshot['pictures']);
+
+}

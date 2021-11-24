@@ -1,10 +1,13 @@
 import 'dart:ui';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
+import 'package:tab_indicator_styler/tab_indicator_styler.dart';
+import 'package:wisata_kebumen/wisata/selectedwisata.dart';
 import 'package:wisata_kebumen/wisata/wisatamodel.dart';
 
 class HomePage1 extends StatefulWidget {
@@ -28,21 +31,91 @@ class _HomePage1State extends State<HomePage1> {
             physics: BouncingScrollPhysics(),
             children: [
               Container(
-                height: 57.6,
-                margin: EdgeInsets.only(top: 28.8, left: 28.8, right: 28.8),
+                height: 50,
+                margin: EdgeInsets.only(top: 20, left: 28.8, right: 28.8),
                 child: Row(
                   children: [
                     Container(
-                      height: 57.6,
-                      width: 57.6,
-                      padding: EdgeInsets.all(18),
+                      height: 50,
+                      width: 50,
+                      padding: EdgeInsets.all(15),
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(10),
                         color: Color(0x080a0928)
                       ),
-                      child: SvgPicture.asset('assets/svg/arrow-left.jpg', color: Colors.black45),
+                      child: SvgPicture.asset('assets/svg/lists.svg', color: Colors.black54),
                     ),
                   ],
+                ),
+              ),
+              //Text Wisata Kebumen
+              Padding(
+                padding: EdgeInsets.only(left: 28.8, top: 30),
+                child: Text(
+                  'Wisata Kebumen',
+                  style: GoogleFonts.openSans(
+                    fontSize: 30, fontWeight: FontWeight.bold
+                  ),
+                ),
+              ),
+              //custom tab bar
+              Container(
+                height: 30,
+                margin: EdgeInsets.only(left: 14.4, top: 28.8),
+                child: DefaultTabController(
+                  length: 6,
+                  child: TabBar(
+                    labelPadding: EdgeInsets.only(left: 14.4, right: 14.4),
+                    indicatorPadding: EdgeInsets.only(left: 14.4, right: 14.4),
+                    isScrollable: true,
+                    labelColor: Colors.black,
+                    unselectedLabelColor: Colors.black38,
+                    labelStyle: GoogleFonts.lato(
+                      fontSize: 14,fontWeight: FontWeight.w700
+                    ),
+                    unselectedLabelStyle: GoogleFonts.lato(
+                        fontSize: 14,fontWeight: FontWeight.w700
+                    ),
+                    indicator: MaterialIndicator(
+                      bottomRightRadius: 5,
+                      bottomLeftRadius: 5,
+                      topLeftRadius: 5,
+                      topRightRadius: 5,
+                      horizontalPadding: 12
+                    ),
+                    tabs: [
+                      Tab(
+                        child: Container(
+                          child: Text('Wisata'),
+                        ),
+                      ),
+                      Tab(
+                        child: Container(
+                          child: Text('Restoran'),
+                        ),
+                      ),
+                      Tab(
+                        child: Container(
+                          child: Text('Rest Area'),
+                        ),
+                      ),
+                      Tab(
+                        child: Container(
+                          child: Text('Hotel'),
+                        ),
+                      ),
+                      Tab(
+                        child: Container(
+                          child: Text('Lorem Ipsum'),
+                        ),
+                      ),
+                      Tab(
+                        child: Container(
+                          child: Text('Lorem Ipsum'),
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
               ),
 
@@ -63,54 +136,59 @@ class _HomePage1State extends State<HomePage1> {
                         controller: _pageController,
                         scrollDirection: Axis.horizontal,
                         children: snapshot.data!.docs.map((document){
-                          return Container(
-                            margin: EdgeInsets.only(right: 28.8),
-                            width: 333.6,
-                            height: 218.4,
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(10),
-                              image: DecorationImage(
-                                image: NetworkImage(document['foto'], scale: 1.0),
-                              )
-                            ),
-                            child: Stack(
-                              children: [
-                                Positioned(
-                                  bottom: 19.2,
-                                    left: 19.2,
-                                    child: ClipRRect(
-                                      borderRadius: BorderRadius.circular(4.8),
-                                      child: BackdropFilter(
-                                        filter: ImageFilter.blur(
-                                            sigmaY: 19.2,
-                                            sigmaX: 19.2
-                                        ),
-                                        child: Container(
-                                          height: 36,
-                                          padding: EdgeInsets.only(left: 16.72, right: 14.4),
-                                          alignment: Alignment.centerLeft,
-                                          child: Row(
-                                            children: [
-                                              SvgPicture.asset('assets/svg/location_on.svg'),
-                                              SizedBox(
-                                                width: 9.52,
-                                              ),
-                                              Text(
-                                                document['nama'],
-                                                style: GoogleFonts.lato(
-                                                  fontWeight: FontWeight.w700,
-                                                  color: Colors.white,
-                                                  fontSize: 16.8
+                          return InkWell(
+                            child: Container(
+                              margin: EdgeInsets.only(right: 28.8),
+                              width: 200,
+                              height: 200,
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(10),
+                                image: DecorationImage(
+                                  image: NetworkImage(document['foto'], scale: 1.0),
+                                )
+                              ),
+                              child: Stack(
+                                children: [
+                                  Positioned(
+                                    bottom: 19.2,
+                                      left: 19.2,
+                                      child: ClipRRect(
+                                        borderRadius: BorderRadius.circular(4.8),
+                                        child: BackdropFilter(
+                                          filter: ImageFilter.blur(
+                                              sigmaY: 19.2,
+                                              sigmaX: 19.2
+                                          ),
+                                          child: Container(
+                                            height: 36,
+                                            padding: EdgeInsets.only(left: 15, right: 14.4),
+                                            alignment: Alignment.centerLeft,
+                                            child: Row(
+                                              children: [
+                                                SvgPicture.asset('assets/svg/location_on.svg'),
+                                                SizedBox(
+                                                  width: 8.52,
                                                 ),
-                                              ),
-                                            ],
+                                                Text(
+                                                  document['nama'],
+                                                  style: GoogleFonts.lato(
+                                                    fontWeight: FontWeight.w700,
+                                                    color: Colors.white,
+                                                    fontSize: 16.8
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
                                           ),
                                         ),
-                                      ),
-                                    )
-                                )
-                              ],
+                                      )
+                                  )
+                                ],
+                              ),
                             ),
+                            onTap: (){
+                              Navigator.push(context, MaterialPageRoute(builder: (context) => SelectedWisata(index: document['nama'])));
+                            },
                           );
                         }).toList()
                     ),
