@@ -31,11 +31,11 @@ class SelectedWisata extends StatelessWidget {
             child: PageView(
                 physics: BouncingScrollPhysics(),
                 controller: _pageController,
-                scrollDirection: Axis.horizontal,
+                scrollDirection: Axis.vertical,
                 children: [
                   ListView.builder(
                     itemCount: pictures.length,
-                    scrollDirection: Axis.vertical,
+                    scrollDirection: Axis.horizontal,
                     itemBuilder: (context, images){
                       return Container(
                         margin: EdgeInsets.only(right: 28.8),
@@ -44,7 +44,7 @@ class SelectedWisata extends StatelessWidget {
                         decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(10),
                             image: DecorationImage(
-                              image: NetworkImage(pictures[images], scale: 1.2),
+                              image: NetworkImage(pictures[images], scale: 1.0),
                             )
                         ),
                         child: Stack(
@@ -59,7 +59,7 @@ class SelectedWisata extends StatelessWidget {
                                         sigmaY: 19.2,
                                         sigmaX: 19.2
                                     ),
-                                    /*child: Container(
+                                    child: Container(
                                       height: 36,
                                       padding: EdgeInsets.only(left: 15, right: 14.4),
                                       alignment: Alignment.centerLeft,
@@ -79,7 +79,7 @@ class SelectedWisata extends StatelessWidget {
                                           ),
                                         ],
                                       ),
-                                    ),*/
+                                    ),
                                   ),
                                 )
                             )
