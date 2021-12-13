@@ -3,6 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:wisata_kebumen/homepage.dart';
 import 'package:wisata_kebumen/homepage1.dart';
 
+import 'homepage2.dart';
+
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
@@ -16,7 +19,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const MaterialApp(
-      home: HomePage1(),
+      home: HomePage2(),
     );
   }
 }
