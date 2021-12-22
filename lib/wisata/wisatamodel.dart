@@ -3,12 +3,16 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 class ReadData{
   final CollectionReference collectionWisata = FirebaseFirestore.instance.collection('wisata');
   final CollectionReference collectionRestoran = FirebaseFirestore.instance.collection('restoran');
+  final CollectionReference collectionHotel = FirebaseFirestore.instance.collection('hotel');
 
   Stream<QuerySnapshot> getStreamWisata(){
     return collectionWisata.snapshots();
   }
   Stream<QuerySnapshot> getStreamRestoran(){
     return collectionRestoran.snapshots();
+  }
+  Stream<QuerySnapshot> getStreamHotel(){
+    return collectionHotel.snapshots();
   }
 }
 

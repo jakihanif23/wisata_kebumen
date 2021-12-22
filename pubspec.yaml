@@ -31,6 +31,7 @@ dependencies:
   cloud_firestore: ^2.5.3
   firebase_core: ^1.7.0
   flutter_svg: ^0.23.0+1
+  firebase_auth: ^3.3.4
   tab_indicator_styler: ^2.0.0
   custom_line_indicator_bottom_navbar: ^0.0.7
   smooth_page_indicator: ^1.0.0+2

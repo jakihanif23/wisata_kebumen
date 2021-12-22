@@ -19,7 +19,6 @@ class HomePage2 extends StatefulWidget {
 }
 
 class _HomePage2State extends State<HomePage2> {
-
   final _pageController = PageController(viewportFraction: 0.877);
   final _stream = ReadData();
 
@@ -44,21 +43,20 @@ class _HomePage2State extends State<HomePage2> {
                         padding: EdgeInsets.all(15),
                         decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(10),
-                            color: Color(0x080a0928)
-                        ),
-                        child: SvgPicture.asset('assets/svg/lists.svg', color: Colors.black54),
+                            color: Color(0x080a0928)),
+                        child: SvgPicture.asset('assets/svg/newlists.svg',
+                            color: Colors.black54),
                       ),
                     ],
                   ),
                 ),
                 //Text Wisata Kebumen
                 Padding(
-                  padding: EdgeInsets.only(left: 28.8, top: 30),
+                  padding: EdgeInsets.only(left: 28.8, top: 20),
                   child: Text(
                     'Wisata Kebumen',
                     style: GoogleFonts.openSans(
-                        fontSize: 30, fontWeight: FontWeight.bold
-                    ),
+                        fontSize: 30, fontWeight: FontWeight.bold),
                   ),
                 ),
                 //custom tab bar
@@ -72,18 +70,15 @@ class _HomePage2State extends State<HomePage2> {
                     labelColor: Colors.black,
                     unselectedLabelColor: Colors.black38,
                     labelStyle: GoogleFonts.lato(
-                        fontSize: 14,fontWeight: FontWeight.w700
-                    ),
+                        fontSize: 14, fontWeight: FontWeight.w700),
                     unselectedLabelStyle: GoogleFonts.lato(
-                        fontSize: 14,fontWeight: FontWeight.w700
-                    ),
+                        fontSize: 14, fontWeight: FontWeight.w700),
                     indicator: MaterialIndicator(
                         bottomRightRadius: 5,
                         bottomLeftRadius: 5,
                         topLeftRadius: 5,
                         topRightRadius: 5,
-                        horizontalPadding: 12
-                    ),
+                        horizontalPadding: 12),
                     tabs: [
                       Tab(
                         child: Container(
@@ -107,7 +102,7 @@ class _HomePage2State extends State<HomePage2> {
                       ),
                       Tab(
                         child: Container(
-                          child: Text('Lorem Ipsum'),
+                          child: Text('Rumah Sakit'),
                         ),
                       ),
                       Tab(
@@ -121,460 +116,494 @@ class _HomePage2State extends State<HomePage2> {
                 //pageview
                 SizedBox(
                   height: 240,
-                  child: TabBarView(
-                    children: [
-                      StreamBuilder(
-                        stream: _stream.getStreamWisata(),
-                        builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
-                          if(!snapshot.hasData){
-                            return Center(
-                              child: CircularProgressIndicator(),
-                            );
-                          }
-                          return Container(
-                            height: 218.4,
-                            margin: EdgeInsets.only(top: 18),
-                            child: PageView(
-                                physics: BouncingScrollPhysics(),
-                                controller: _pageController,
-                                scrollDirection: Axis.horizontal,
-                                children: snapshot.data!.docs.map((document){
-                                  return InkWell(
-                                    child: Container(
-                                      margin: EdgeInsets.only(right: 28.8),
-                                      width: 200,
-                                      height: 200,
-                                      decoration: BoxDecoration(
-                                          borderRadius: BorderRadius.circular(10),
-                                          image: DecorationImage(
-                                            image: NetworkImage(document['foto'], scale: 1.0),
-                                          )
-                                      ),
-                                      child: Stack(
-                                        children: [
-                                          Positioned(
-                                              bottom: 19.2,
-                                              left: 19.2,
-                                              child: ClipRRect(
-                                                borderRadius: BorderRadius.circular(4.8),
-                                                child: BackdropFilter(
-                                                  filter: ImageFilter.blur(
-                                                      sigmaY: 19.2,
-                                                      sigmaX: 19.2
-                                                  ),
-                                                  child: Container(
-                                                    height: 36,
-                                                    padding: EdgeInsets.only(left: 15, right: 14.4),
-                                                    alignment: Alignment.centerLeft,
-                                                    child: Row(
-                                                      children: [
-                                                        SvgPicture.asset('assets/svg/location_on.svg'),
-                                                        SizedBox(
-                                                          width: 8.52,
-                                                        ),
-                                                        Text(
-                                                          document['nama'],
-                                                          style: GoogleFonts.lato(
-                                                              fontWeight: FontWeight.w700,
-                                                              color: Colors.white,
-                                                              fontSize: 16.8
-                                                          ),
-                                                        ),
-                                                      ],
-                                                    ),
+                  child: TabBarView(children: [
+                    StreamBuilder(
+                      stream: _stream.getStreamWisata(),
+                      builder: (BuildContext context,
+                          AsyncSnapshot<QuerySnapshot> snapshot) {
+                        if (!snapshot.hasData) {
+                          return Center(
+                            child: CircularProgressIndicator(),
+                          );
+                        }
+                        return Container(
+                          height: 218.4,
+                          margin: EdgeInsets.only(top: 18),
+                          child: PageView(
+                              physics: BouncingScrollPhysics(),
+                              controller: _pageController,
+                              scrollDirection: Axis.horizontal,
+                              children: snapshot.data!.docs.map((document) {
+                                return InkWell(
+                                  child: Container(
+                                    margin: EdgeInsets.only(right: 28.8),
+                                    width: 200,
+                                    height: 200,
+                                    decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(10),
+                                        image: DecorationImage(
+                                          image: NetworkImage(document['foto'],
+                                              scale: 1.0),
+                                        )),
+                                    child: Stack(
+                                      children: [
+                                        Positioned(
+                                            bottom: 19.2,
+                                            left: 19.2,
+                                            child: ClipRRect(
+                                              borderRadius:
+                                                  BorderRadius.circular(4.8),
+                                              child: BackdropFilter(
+                                                filter: ImageFilter.blur(
+                                                    sigmaY: 19.2, sigmaX: 19.2),
+                                                child: Container(
+                                                  height: 36,
+                                                  padding: EdgeInsets.only(
+                                                      left: 15, right: 14.4),
+                                                  alignment:
+                                                      Alignment.centerLeft,
+                                                  child: Row(
+                                                    children: [
+                                                      SvgPicture.asset(
+                                                          'assets/svg/location_on.svg'),
+                                                      SizedBox(
+                                                        width: 8.52,
+                                                      ),
+                                                      Text(
+                                                        document['nama'],
+                                                        style: GoogleFonts.lato(
+                                                            fontWeight:
+                                                                FontWeight.w700,
+                                                            color: Colors.white,
+                                                            fontSize: 16.8),
+                                                      ),
+                                                    ],
                                                   ),
                                                 ),
-                                              )
-                                          )
-                                        ],
-                                      ),
+                                              ),
+                                            ))
+                                      ],
                                     ),
-                                    onTap: (){
-                                      Navigator.push(context, MaterialPageRoute(builder: (context) => SelectedWisata(index: document['nama'])));
-                                    },
-                                  );
-                                }).toList()
-                            ),
+                                  ),
+                                  onTap: () {
+                                    Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                SelectedWisata(
+                                                    index: document['nama'])));
+                                  },
+                                );
+                              }).toList()),
+                        );
+                      },
+                    ),
+                    StreamBuilder(
+                      stream: _stream.getStreamRestoran(),
+                      builder: (BuildContext context,
+                          AsyncSnapshot<QuerySnapshot> snapshot) {
+                        if (!snapshot.hasData) {
+                          return Center(
+                            child: CircularProgressIndicator(),
                           );
-                        },
-                      ),
-                      StreamBuilder(
-                        stream: _stream.getStreamRestoran(),
-                        builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
-                          if(!snapshot.hasData){
-                            return Center(
-                              child: CircularProgressIndicator(),
-                            );
-                          }
-                          return Container(
-                            height: 218.4,
-                            margin: EdgeInsets.only(top: 18),
-                            child: PageView(
-                                physics: BouncingScrollPhysics(),
-                                controller: _pageController,
-                                scrollDirection: Axis.horizontal,
-                                children: snapshot.data!.docs.map((document){
-                                  return InkWell(
-                                    child: Container(
-                                      margin: EdgeInsets.only(right: 28.8),
-                                      width: 200,
-                                      height: 200,
-                                      decoration: BoxDecoration(
-                                          borderRadius: BorderRadius.circular(10),
-                                          image: DecorationImage(
-                                            image: NetworkImage(document['foto'], scale: 1.0),
-                                          )
-                                      ),
-                                      child: Stack(
-                                        children: [
-                                          Positioned(
-                                              bottom: 19.2,
-                                              left: 19.2,
-                                              child: ClipRRect(
-                                                borderRadius: BorderRadius.circular(4.8),
-                                                child: BackdropFilter(
-                                                  filter: ImageFilter.blur(
-                                                      sigmaY: 19.2,
-                                                      sigmaX: 19.2
-                                                  ),
-                                                  child: Container(
-                                                    height: 36,
-                                                    padding: EdgeInsets.only(left: 15, right: 14.4),
-                                                    alignment: Alignment.centerLeft,
-                                                    child: Row(
-                                                      children: [
-                                                        SvgPicture.asset('assets/svg/location_on.svg'),
-                                                        SizedBox(
-                                                          width: 8.52,
-                                                        ),
-                                                        Text(
-                                                          document['nama'],
-                                                          style: GoogleFonts.lato(
-                                                              fontWeight: FontWeight.w700,
-                                                              color: Colors.white,
-                                                              fontSize: 16.8
-                                                          ),
-                                                        ),
-                                                      ],
-                                                    ),
+                        }
+                        return Container(
+                          height: 218.4,
+                          margin: EdgeInsets.only(top: 18),
+                          child: PageView(
+                              physics: BouncingScrollPhysics(),
+                              controller: _pageController,
+                              scrollDirection: Axis.horizontal,
+                              children: snapshot.data!.docs.map((document) {
+                                return InkWell(
+                                  child: Container(
+                                    margin: EdgeInsets.only(right: 28.8),
+                                    width: 200,
+                                    height: 200,
+                                    decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(10),
+                                        image: DecorationImage(
+                                          image: NetworkImage(document['foto'],
+                                              scale: 1.0),
+                                        )),
+                                    child: Stack(
+                                      children: [
+                                        Positioned(
+                                            bottom: 19.2,
+                                            left: 19.2,
+                                            child: ClipRRect(
+                                              borderRadius:
+                                                  BorderRadius.circular(4.8),
+                                              child: BackdropFilter(
+                                                filter: ImageFilter.blur(
+                                                    sigmaY: 19.2, sigmaX: 19.2),
+                                                child: Container(
+                                                  height: 36,
+                                                  padding: EdgeInsets.only(
+                                                      left: 15, right: 14.4),
+                                                  alignment:
+                                                      Alignment.centerLeft,
+                                                  child: Row(
+                                                    children: [
+                                                      SvgPicture.asset(
+                                                          'assets/svg/location_on.svg'),
+                                                      SizedBox(
+                                                        width: 8.52,
+                                                      ),
+                                                      Text(
+                                                        document['nama'],
+                                                        style: GoogleFonts.lato(
+                                                            fontWeight:
+                                                                FontWeight.w700,
+                                                            color: Colors.white,
+                                                            fontSize: 16.8),
+                                                      ),
+                                                    ],
                                                   ),
                                                 ),
-                                              )
-                                          )
-                                        ],
-                                      ),
+                                              ),
+                                            ))
+                                      ],
                                     ),
-                                    onTap: (){
-                                      Navigator.push(context, MaterialPageRoute(builder: (context) => DetailRestoran(index: document['nama'])));
-                                    },
-                                  );
-                                }).toList()
-                            ),
+                                  ),
+                                  onTap: () {
+                                    Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                DetailRestoran(
+                                                    index: document['nama'])));
+                                  },
+                                );
+                              }).toList()),
+                        );
+                      },
+                    ),
+                    StreamBuilder(
+                      stream: _stream.getStreamWisata(),
+                      builder: (BuildContext context,
+                          AsyncSnapshot<QuerySnapshot> snapshot) {
+                        if (!snapshot.hasData) {
+                          return Center(
+                            child: CircularProgressIndicator(),
                           );
-                        },
-                      ),
-                      StreamBuilder(
-                        stream: _stream.getStreamWisata(),
-                        builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
-                          if(!snapshot.hasData){
-                            return Center(
-                              child: CircularProgressIndicator(),
-                            );
-                          }
-                          return Container(
-                            height: 218.4,
-                            margin: EdgeInsets.only(top: 18),
-                            child: PageView(
-                                physics: BouncingScrollPhysics(),
-                                controller: _pageController,
-                                scrollDirection: Axis.horizontal,
-                                children: snapshot.data!.docs.map((document){
-                                  return InkWell(
-                                    child: Container(
-                                      margin: EdgeInsets.only(right: 28.8),
-                                      width: 200,
-                                      height: 200,
-                                      decoration: BoxDecoration(
-                                          borderRadius: BorderRadius.circular(10),
-                                          image: DecorationImage(
-                                            image: NetworkImage(document['foto'], scale: 1.0),
-                                          )
-                                      ),
-                                      child: Stack(
-                                        children: [
-                                          Positioned(
-                                              bottom: 19.2,
-                                              left: 19.2,
-                                              child: ClipRRect(
-                                                borderRadius: BorderRadius.circular(4.8),
-                                                child: BackdropFilter(
-                                                  filter: ImageFilter.blur(
-                                                      sigmaY: 19.2,
-                                                      sigmaX: 19.2
-                                                  ),
-                                                  child: Container(
-                                                    height: 36,
-                                                    padding: EdgeInsets.only(left: 15, right: 14.4),
-                                                    alignment: Alignment.centerLeft,
-                                                    child: Row(
-                                                      children: [
-                                                        SvgPicture.asset('assets/svg/location_on.svg'),
-                                                        SizedBox(
-                                                          width: 8.52,
-                                                        ),
-                                                        Text(
-                                                          document['nama'],
-                                                          style: GoogleFonts.lato(
-                                                              fontWeight: FontWeight.w700,
-                                                              color: Colors.white,
-                                                              fontSize: 16.8
-                                                          ),
-                                                        ),
-                                                      ],
-                                                    ),
+                        }
+                        return Container(
+                          height: 218.4,
+                          margin: EdgeInsets.only(top: 18),
+                          child: PageView(
+                              physics: BouncingScrollPhysics(),
+                              controller: _pageController,
+                              scrollDirection: Axis.horizontal,
+                              children: snapshot.data!.docs.map((document) {
+                                return InkWell(
+                                  child: Container(
+                                    margin: EdgeInsets.only(right: 28.8),
+                                    width: 200,
+                                    height: 200,
+                                    decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(10),
+                                        image: DecorationImage(
+                                          image: NetworkImage(document['foto'],
+                                              scale: 1.0),
+                                        )),
+                                    child: Stack(
+                                      children: [
+                                        Positioned(
+                                            bottom: 19.2,
+                                            left: 19.2,
+                                            child: ClipRRect(
+                                              borderRadius:
+                                                  BorderRadius.circular(4.8),
+                                              child: BackdropFilter(
+                                                filter: ImageFilter.blur(
+                                                    sigmaY: 19.2, sigmaX: 19.2),
+                                                child: Container(
+                                                  height: 36,
+                                                  padding: EdgeInsets.only(
+                                                      left: 15, right: 14.4),
+                                                  alignment:
+                                                      Alignment.centerLeft,
+                                                  child: Row(
+                                                    children: [
+                                                      SvgPicture.asset(
+                                                          'assets/svg/location_on.svg'),
+                                                      SizedBox(
+                                                        width: 8.52,
+                                                      ),
+                                                      Text(
+                                                        document['nama'],
+                                                        style: GoogleFonts.lato(
+                                                            fontWeight:
+                                                                FontWeight.w700,
+                                                            color: Colors.white,
+                                                            fontSize: 16.8),
+                                                      ),
+                                                    ],
                                                   ),
                                                 ),
-                                              )
-                                          )
-                                        ],
-                                      ),
+                                              ),
+                                            ))
+                                      ],
                                     ),
-                                    onTap: (){
-                                      Navigator.push(context, MaterialPageRoute(builder: (context) => SelectedWisata(index: document['nama'])));
-                                    },
-                                  );
-                                }).toList()
-                            ),
+                                  ),
+                                  onTap: () {
+                                    Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                SelectedWisata(
+                                                    index: document['nama'])));
+                                  },
+                                );
+                              }).toList()),
+                        );
+                      },
+                    ),
+                    StreamBuilder(
+                      stream: _stream.getStreamHotel(),
+                      builder: (BuildContext context,
+                          AsyncSnapshot<QuerySnapshot> snapshot) {
+                        if (!snapshot.hasData) {
+                          return Center(
+                            child: CircularProgressIndicator(),
                           );
-                        },
-                      ),
-                      StreamBuilder(
-                        stream: _stream.getStreamWisata(),
-                        builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
-                          if(!snapshot.hasData){
-                            return Center(
-                              child: CircularProgressIndicator(),
-                            );
-                          }
-                          return Container(
-                            height: 218.4,
-                            margin: EdgeInsets.only(top: 18),
-                            child: PageView(
-                                physics: BouncingScrollPhysics(),
-                                controller: _pageController,
-                                scrollDirection: Axis.horizontal,
-                                children: snapshot.data!.docs.map((document){
-                                  return InkWell(
-                                    child: Container(
-                                      margin: EdgeInsets.only(right: 28.8),
-                                      width: 200,
-                                      height: 200,
-                                      decoration: BoxDecoration(
-                                          borderRadius: BorderRadius.circular(10),
-                                          image: DecorationImage(
-                                            image: NetworkImage(document['foto'], scale: 1.0),
-                                          )
-                                      ),
-                                      child: Stack(
-                                        children: [
-                                          Positioned(
-                                              bottom: 19.2,
-                                              left: 19.2,
-                                              child: ClipRRect(
-                                                borderRadius: BorderRadius.circular(4.8),
-                                                child: BackdropFilter(
-                                                  filter: ImageFilter.blur(
-                                                      sigmaY: 19.2,
-                                                      sigmaX: 19.2
-                                                  ),
-                                                  child: Container(
-                                                    height: 36,
-                                                    padding: EdgeInsets.only(left: 15, right: 14.4),
-                                                    alignment: Alignment.centerLeft,
-                                                    child: Row(
-                                                      children: [
-                                                        SvgPicture.asset('assets/svg/location_on.svg'),
-                                                        SizedBox(
-                                                          width: 8.52,
-                                                        ),
-                                                        Text(
-                                                          document['nama'],
-                                                          style: GoogleFonts.lato(
-                                                              fontWeight: FontWeight.w700,
-                                                              color: Colors.white,
-                                                              fontSize: 16.8
-                                                          ),
-                                                        ),
-                                                      ],
-                                                    ),
+                        }
+                        return Container(
+                          height: 218.4,
+                          margin: EdgeInsets.only(top: 18),
+                          child: PageView(
+                              physics: BouncingScrollPhysics(),
+                              controller: _pageController,
+                              scrollDirection: Axis.horizontal,
+                              children: snapshot.data!.docs.map((document) {
+                                return InkWell(
+                                  child: Container(
+                                    margin: EdgeInsets.only(right: 28.8),
+                                    width: 200,
+                                    height: 200,
+                                    decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(10),
+                                        image: DecorationImage(
+                                          image: NetworkImage(document['foto'],
+                                              scale: 1.0),
+                                        )),
+                                    child: Stack(
+                                      children: [
+                                        Positioned(
+                                            bottom: 19.2,
+                                            left: 19.2,
+                                            child: ClipRRect(
+                                              borderRadius:
+                                                  BorderRadius.circular(4.8),
+                                              child: BackdropFilter(
+                                                filter: ImageFilter.blur(
+                                                    sigmaY: 19.2, sigmaX: 19.2),
+                                                child: Container(
+                                                  height: 36,
+                                                  padding: EdgeInsets.only(
+                                                      left: 15, right: 14.4),
+                                                  alignment:
+                                                      Alignment.centerLeft,
+                                                  child: Row(
+                                                    children: [
+                                                      SvgPicture.asset(
+                                                          'assets/svg/location_on.svg'),
+                                                      SizedBox(
+                                                        width: 8.52,
+                                                      ),
+                                                      Text(
+                                                        document['nama'],
+                                                        style: GoogleFonts.lato(
+                                                            fontWeight:
+                                                                FontWeight.w700,
+                                                            color: Colors.white,
+                                                            fontSize: 16.8),
+                                                      ),
+                                                    ],
                                                   ),
                                                 ),
-                                              )
-                                          )
-                                        ],
-                                      ),
+                                              ),
+                                            ))
+                                      ],
                                     ),
-                                    onTap: (){
-                                      Navigator.push(context, MaterialPageRoute(builder: (context) => SelectedWisata(index: document['nama'])));
-                                    },
-                                  );
-                                }).toList()
-                            ),
+                                  ),
+                                  onTap: () {
+                                    Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                SelectedWisata(
+                                                    index: document['nama'])));
+                                  },
+                                );
+                              }).toList()),
+                        );
+                      },
+                    ),
+                    StreamBuilder(
+                      stream: _stream.getStreamWisata(),
+                      builder: (BuildContext context,
+                          AsyncSnapshot<QuerySnapshot> snapshot) {
+                        if (!snapshot.hasData) {
+                          return Center(
+                            child: CircularProgressIndicator(),
                           );
-                        },
-                      ),
-                      StreamBuilder(
-                        stream: _stream.getStreamWisata(),
-                        builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
-                          if(!snapshot.hasData){
-                            return Center(
-                              child: CircularProgressIndicator(),
-                            );
-                          }
-                          return Container(
-                            height: 218.4,
-                            margin: EdgeInsets.only(top: 18),
-                            child: PageView(
-                                physics: BouncingScrollPhysics(),
-                                controller: _pageController,
-                                scrollDirection: Axis.horizontal,
-                                children: snapshot.data!.docs.map((document){
-                                  return InkWell(
-                                    child: Container(
-                                      margin: EdgeInsets.only(right: 28.8),
-                                      width: 200,
-                                      height: 200,
-                                      decoration: BoxDecoration(
-                                          borderRadius: BorderRadius.circular(10),
-                                          image: DecorationImage(
-                                            image: NetworkImage(document['foto'], scale: 1.0),
-                                          )
-                                      ),
-                                      child: Stack(
-                                        children: [
-                                          Positioned(
-                                              bottom: 19.2,
-                                              left: 19.2,
-                                              child: ClipRRect(
-                                                borderRadius: BorderRadius.circular(4.8),
-                                                child: BackdropFilter(
-                                                  filter: ImageFilter.blur(
-                                                      sigmaY: 19.2,
-                                                      sigmaX: 19.2
-                                                  ),
-                                                  child: Container(
-                                                    height: 36,
-                                                    padding: EdgeInsets.only(left: 15, right: 14.4),
-                                                    alignment: Alignment.centerLeft,
-                                                    child: Row(
-                                                      children: [
-                                                        SvgPicture.asset('assets/svg/location_on.svg'),
-                                                        SizedBox(
-                                                          width: 8.52,
-                                                        ),
-                                                        Text(
-                                                          document['nama'],
-                                                          style: GoogleFonts.lato(
-                                                              fontWeight: FontWeight.w700,
-                                                              color: Colors.white,
-                                                              fontSize: 16.8
-                                                          ),
-                                                        ),
-                                                      ],
-                                                    ),
+                        }
+                        return Container(
+                          height: 218.4,
+                          margin: EdgeInsets.only(top: 18),
+                          child: PageView(
+                              physics: BouncingScrollPhysics(),
+                              controller: _pageController,
+                              scrollDirection: Axis.horizontal,
+                              children: snapshot.data!.docs.map((document) {
+                                return InkWell(
+                                  child: Container(
+                                    margin: EdgeInsets.only(right: 28.8),
+                                    width: 200,
+                                    height: 200,
+                                    decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(10),
+                                        image: DecorationImage(
+                                          image: NetworkImage(document['foto'],
+                                              scale: 1.0),
+                                        )),
+                                    child: Stack(
+                                      children: [
+                                        Positioned(
+                                            bottom: 19.2,
+                                            left: 19.2,
+                                            child: ClipRRect(
+                                              borderRadius:
+                                                  BorderRadius.circular(4.8),
+                                              child: BackdropFilter(
+                                                filter: ImageFilter.blur(
+                                                    sigmaY: 19.2, sigmaX: 19.2),
+                                                child: Container(
+                                                  height: 36,
+                                                  padding: EdgeInsets.only(
+                                                      left: 15, right: 14.4),
+                                                  alignment:
+                                                      Alignment.centerLeft,
+                                                  child: Row(
+                                                    children: [
+                                                      SvgPicture.asset(
+                                                          'assets/svg/location_on.svg'),
+                                                      SizedBox(
+                                                        width: 8.52,
+                                                      ),
+                                                      Text(
+                                                        document['nama'],
+                                                        style: GoogleFonts.lato(
+                                                            fontWeight:
+                                                                FontWeight.w700,
+                                                            color: Colors.white,
+                                                            fontSize: 16.8),
+                                                      ),
+                                                    ],
                                                   ),
                                                 ),
-                                              )
-                                          )
-                                        ],
-                                      ),
+                                              ),
+                                            ))
+                                      ],
                                     ),
-                                    onTap: (){
-                                      Navigator.push(context, MaterialPageRoute(builder: (context) => SelectedWisata(index: document['nama'])));
-                                    },
-                                  );
-                                }).toList()
-                            ),
+                                  ),
+                                  onTap: () {
+                                    Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                SelectedWisata(
+                                                    index: document['nama'])));
+                                  },
+                                );
+                              }).toList()),
+                        );
+                      },
+                    ),
+                    StreamBuilder(
+                      stream: _stream.getStreamWisata(),
+                      builder: (BuildContext context,
+                          AsyncSnapshot<QuerySnapshot> snapshot) {
+                        if (!snapshot.hasData) {
+                          return Center(
+                            child: CircularProgressIndicator(),
                           );
-                        },
-                      ),
-                      StreamBuilder(
-                        stream: _stream.getStreamWisata(),
-                        builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
-                          if(!snapshot.hasData){
-                            return Center(
-                              child: CircularProgressIndicator(),
-                            );
-                          }
-                          return Container(
-                            height: 218.4,
-                            margin: EdgeInsets.only(top: 18),
-                            child: PageView(
-                                physics: BouncingScrollPhysics(),
-                                controller: _pageController,
-                                scrollDirection: Axis.horizontal,
-                                children: snapshot.data!.docs.map((document){
-                                  return InkWell(
-                                    child: Container(
-                                      margin: EdgeInsets.only(right: 28.8),
-                                      width: 200,
-                                      height: 200,
-                                      decoration: BoxDecoration(
-                                          borderRadius: BorderRadius.circular(10),
-                                          image: DecorationImage(
-                                            image: NetworkImage(document['foto'], scale: 1.0),
-                                          )
-                                      ),
-                                      child: Stack(
-                                        children: [
-                                          Positioned(
-                                              bottom: 19.2,
-                                              left: 19.2,
-                                              child: ClipRRect(
-                                                borderRadius: BorderRadius.circular(4.8),
-                                                child: BackdropFilter(
-                                                  filter: ImageFilter.blur(
-                                                      sigmaY: 19.2,
-                                                      sigmaX: 19.2
-                                                  ),
-                                                  child: Container(
-                                                    height: 36,
-                                                    padding: EdgeInsets.only(left: 15, right: 14.4),
-                                                    alignment: Alignment.centerLeft,
-                                                    child: Row(
-                                                      children: [
-                                                        SvgPicture.asset('assets/svg/location_on.svg'),
-                                                        SizedBox(
-                                                          width: 8.52,
-                                                        ),
-                                                        Text(
-                                                          document['nama'],
-                                                          style: GoogleFonts.lato(
-                                                              fontWeight: FontWeight.w700,
-                                                              color: Colors.white,
-                                                              fontSize: 16.8
-                                                          ),
-                                                        ),
-                                                      ],
-                                                    ),
+                        }
+                        return Container(
+                          height: 218.4,
+                          margin: EdgeInsets.only(top: 18),
+                          child: PageView(
+                              physics: BouncingScrollPhysics(),
+                              controller: _pageController,
+                              scrollDirection: Axis.horizontal,
+                              children: snapshot.data!.docs.map((document) {
+                                return InkWell(
+                                  child: Container(
+                                    margin: EdgeInsets.only(right: 28.8),
+                                    width: 200,
+                                    height: 200,
+                                    decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(10),
+                                        image: DecorationImage(
+                                          image: NetworkImage(document['foto'],
+                                              scale: 1.0),
+                                        )),
+                                    child: Stack(
+                                      children: [
+                                        Positioned(
+                                            bottom: 19.2,
+                                            left: 19.2,
+                                            child: ClipRRect(
+                                              borderRadius:
+                                                  BorderRadius.circular(4.8),
+                                              child: BackdropFilter(
+                                                filter: ImageFilter.blur(
+                                                    sigmaY: 19.2, sigmaX: 19.2),
+                                                child: Container(
+                                                  height: 36,
+                                                  padding: EdgeInsets.only(
+                                                      left: 15, right: 14.4),
+                                                  alignment:
+                                                      Alignment.centerLeft,
+                                                  child: Row(
+                                                    children: [
+                                                      SvgPicture.asset(
+                                                          'assets/svg/location_on.svg'),
+                                                      SizedBox(
+                                                        width: 8.52,
+                                                      ),
+                                                      Text(
+                                                        document['nama'],
+                                                        style: GoogleFonts.lato(
+                                                            fontWeight:
+                                                                FontWeight.w700,
+                                                            color: Colors.white,
+                                                            fontSize: 16.8),
+                                                      ),
+                                                    ],
                                                   ),
                                                 ),
-                                              )
-                                          )
-                                        ],
-                                      ),
+                                              ),
+                                            ))
+                                      ],
                                     ),
-                                    onTap: (){
-                                      Navigator.push(context, MaterialPageRoute(builder: (context) => SelectedWisata(index: document['nama'])));
-                                    },
-                                  );
-                                }).toList()
-                            ),
-                          );
-                        },
-                      ),
-                    ]
-                  ),
+                                  ),
+                                  onTap: () {
+                                    Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                SelectedWisata(
+                                                    index: document['nama'])));
+                                  },
+                                );
+                              }).toList()),
+                        );
+                      },
+                    ),
+                  ]),
                 ),
                 //dots indicator
                 Padding(
@@ -587,8 +616,7 @@ class _HomePage2State extends State<HomePage2> {
                         dotColor: Color(0xFFababab),
                         dotHeight: 4.8,
                         dotWidth: 6,
-                        spacing: 5
-                    ),
+                        spacing: 5),
                   ),
                 )
               ],

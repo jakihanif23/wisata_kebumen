@@ -1,6 +1,5 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:wisata_kebumen/homepage.dart';
 import 'package:wisata_kebumen/homepage1.dart';
 
 import 'homepage2.dart';
