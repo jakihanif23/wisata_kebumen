@@ -3,21 +3,28 @@ import 'dart:ui';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-class SelectedWisata extends StatelessWidget {
+class SelectedWisata extends StatefulWidget {
   SelectedWisata({required this.index});
   final String index;
-  final _pageController = PageController();
 
+  @override
+  State<SelectedWisata> createState() => _SelectedWisataState();
+}
+
+class _SelectedWisataState extends State<SelectedWisata> {
+  final _pageController = PageController();
+  double rating = 2.5;
 
   @override
   Widget build(BuildContext context) {
     var wisataRef = FirebaseFirestore.instance.collection('wisata');
-    var docs = FirebaseFirestore.instance.collection('wisata').doc(index);
+    var docs = FirebaseFirestore.instance.collection('wisata').doc(widget.index);
     return StreamBuilder(
-      stream: wisataRef.doc(index).snapshots(),
+      stream: wisataRef.doc(widget.index).snapshots(),
       builder: (BuildContext context, AsyncSnapshot<DocumentSnapshot> snapshot){
         if(!snapshot.hasData){
           return Center(
@@ -28,68 +35,48 @@ class SelectedWisata extends StatelessWidget {
         List<dynamic> pictures = wisataDoc!['pictures'];
         return Scaffold(
           body: Container(
-            child: PageView(
-                physics: BouncingScrollPhysics(),
-                controller: _pageController,
-                scrollDirection: Axis.vertical,
-                children: [
-                  ListView.builder(
+            margin: EdgeInsets.fromLTRB(10, 0, 10, 0),
+            child: Column(
+              children: [
+                Container(
+                  height: 320,
+                  child: ListView.builder(
                     itemCount: pictures.length,
                     scrollDirection: Axis.horizontal,
                     itemBuilder: (context, images){
                       return Container(
-                        margin: EdgeInsets.only(right: 28.8),
-                        width: 200,
-                        height: 200,
+                        width: 400,
+                        height: 400,
                         decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(10),
                             image: DecorationImage(
-                              image: NetworkImage(pictures[images], scale: 1.0),
+                              image: NetworkImage(pictures[images], scale: 0.1),
                             )
-                        ),
-                        child: Stack(
-                          children: [
-                            Positioned(
-                                bottom: 19.2,
-                                left: 19.2,
-                                child: ClipRRect(
-                                  borderRadius: BorderRadius.circular(4.8),
-                                  child: BackdropFilter(
-                                    filter: ImageFilter.blur(
-                                        sigmaY: 19.2,
-                                        sigmaX: 19.2
-                                    ),
-                                    child: Container(
-                                      height: 36,
-                                      padding: EdgeInsets.only(left: 15, right: 14.4),
-                                      alignment: Alignment.centerLeft,
-                                      child: Row(
-                                        children: [
-                                          SvgPicture.asset('assets/svg/location_on.svg'),
-                                          SizedBox(
-                                            width: 8.52,
-                                          ),
-                                          Text(
-                                            wisataDoc['nama'],
-                                            style: GoogleFonts.lato(
-                                                fontWeight: FontWeight.w700,
-                                                color: Colors.white,
-                                                fontSize: 16.8
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                  ),
-                                )
-                            )
-                          ],
                         ),
                       );
                     }
-                  )
-
-                ],
+                  ),
+                ),
+                Text(wisataDoc['nama']),
+                SizedBox(height: 20,),
+                RatingBar.builder(
+                  initialRating: 2.5,
+                  minRating: 1,
+                  direction: Axis.horizontal,
+                  allowHalfRating: true,
+                  itemCount: 5,
+                  onRatingUpdate: (rating) {
+                    print(rating);
+                    setState(() {
+                      this.rating = rating;
+                    });
+                  },
+                  itemBuilder: (context, _)=>Icon(Icons.star, color: Colors.amber,),
+                ),
+                Text(
+                  'Rating: $rating',
+                )
+              ],
             ),
           ),
         );

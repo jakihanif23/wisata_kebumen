@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:wisata_kebumen/homepage1.dart';
 
 import 'homepage2.dart';
+import 'login_and_register/login.dart';
 
 
 void main() async {
@@ -18,7 +19,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const MaterialApp(
-      home: HomePage2(),
+      home: Login()
     );
   }
 }
