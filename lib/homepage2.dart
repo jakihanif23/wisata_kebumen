@@ -1,12 +1,14 @@
 import 'dart:ui';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import 'package:tab_indicator_styler/tab_indicator_styler.dart';
+import 'package:wisata_kebumen/login_and_register/login.dart';
 import 'package:wisata_kebumen/restoran/detailrestoran.dart';
 import 'package:wisata_kebumen/wisata/selectedwisata.dart';
 import 'package:wisata_kebumen/wisata/wisatamodel.dart';
@@ -24,6 +26,12 @@ class _HomePage2State extends State<HomePage2> {
 
   @override
   Widget build(BuildContext context) {
+    FirebaseAuth.instance.authStateChanges().
+    listen((User? user) {
+      if (user == null){
+        Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context)=>Login()));
+      }
+    });
     return DefaultTabController(
       length: 6,
       child: Scaffold(
@@ -618,6 +626,14 @@ class _HomePage2State extends State<HomePage2> {
                         dotWidth: 6,
                         spacing: 5),
                   ),
+                ),
+                SizedBox(height: 30,),
+                TextButton(
+                  onPressed: () async{
+                    await FirebaseAuth.instance.signOut();
+                    Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context)=>Login()));
+                  },
+                  child: Text('WASD'),
                 )
               ],
             ),

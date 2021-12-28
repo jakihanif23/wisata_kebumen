@@ -90,7 +90,7 @@ Widget insertPassword(){
                 Icons.lock,
                 color: Colors.white,
               ),
-              hintText: 'Enter Your Password',
+              hintText: 'Masukkan Password',
               hintStyle: GoogleFonts.lato()
           ),
         ),
