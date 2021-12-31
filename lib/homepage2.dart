@@ -6,6 +6,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import 'package:tab_indicator_styler/tab_indicator_styler.dart';
 import 'package:wisata_kebumen/login_and_register/login.dart';
@@ -630,10 +631,23 @@ class _HomePage2State extends State<HomePage2> {
                 SizedBox(height: 30,),
                 TextButton(
                   onPressed: () async{
+                    GoogleSignIn googleUserlogout = await GoogleSignIn();
                     await FirebaseAuth.instance.signOut();
+                    googleUserlogout.signOut();
                     Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context)=>Login()));
                   },
-                  child: Text('WASD'),
+                  child: Text('Logout'),
+                ),
+                SizedBox(height: 20,),
+                Container(
+                  child: Center(
+                    child: Builder(
+                      builder: (context) {
+                        User? user = FirebaseAuth.instance.currentUser;
+                        return Text(user!.displayName.toString());
+                      },
+                    ),
+                  ),
                 )
               ],
             ),
@@ -643,78 +657,3 @@ class _HomePage2State extends State<HomePage2> {
     );
   }
 }
-/*StreamBuilder(
-stream: _stream.getStreamWisata(),
-builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
-if(!snapshot.hasData){
-return Center(
-child: CircularProgressIndicator(),
-);
-}
-return Container(
-height: 218.4,
-margin: EdgeInsets.only(top: 18),
-child: PageView(
-physics: BouncingScrollPhysics(),
-controller: _pageController,
-scrollDirection: Axis.horizontal,
-children: snapshot.data!.docs.map((document){
-return InkWell(
-child: Container(
-margin: EdgeInsets.only(right: 28.8),
-width: 200,
-height: 200,
-decoration: BoxDecoration(
-borderRadius: BorderRadius.circular(10),
-image: DecorationImage(
-image: NetworkImage(document['foto'], scale: 1.0),
-)
-),
-child: Stack(
-children: [
-Positioned(
-bottom: 19.2,
-left: 19.2,
-child: ClipRRect(
-borderRadius: BorderRadius.circular(4.8),
-child: BackdropFilter(
-filter: ImageFilter.blur(
-sigmaY: 19.2,
-sigmaX: 19.2
-),
-child: Container(
-height: 36,
-padding: EdgeInsets.only(left: 15, right: 14.4),
-alignment: Alignment.centerLeft,
-child: Row(
-children: [
-SvgPicture.asset('assets/svg/location_on.svg'),
-SizedBox(
-width: 8.52,
-),
-Text(
-document['nama'],
-style: GoogleFonts.lato(
-fontWeight: FontWeight.w700,
-color: Colors.white,
-fontSize: 16.8
-),
-),
-],
-),
-),
-),
-)
-)
-],
-),
-),
-onTap: (){
-Navigator.push(context, MaterialPageRoute(builder: (context) => SelectedWisata(index: document['nama'])));
-},
-);
-}).toList()
-),
-);
-},
-),*/

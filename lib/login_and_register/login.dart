@@ -1,12 +1,10 @@
 import 'dart:async';
-import 'dart:convert' show json;
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:google_fonts/google_fonts.dart';
-import "package:http/http.dart" as http;
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
-import 'package:provider/provider.dart';
 import 'package:wisata_kebumen/homepage2.dart';
 import 'package:wisata_kebumen/login_and_register/auth_service.dart';
 import 'package:wisata_kebumen/login_and_register/register.dart';
@@ -14,13 +12,11 @@ import 'package:wisata_kebumen/login_and_register/widget.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 class Login extends StatefulWidget {
-
   @override
   State<Login> createState() => _LoginState();
 }
 
 class _LoginState extends State<Login> {
-
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
   final AuthService authService = AuthService();
@@ -28,8 +24,8 @@ class _LoginState extends State<Login> {
   //LoginTest
   static Future<User?> loginTest(
       {required String email,
-        required String password,
-        required BuildContext context}) async {
+      required String password,
+      required BuildContext context}) async {
     FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
     User? user;
     try {
@@ -57,7 +53,9 @@ class _LoginState extends State<Login> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    SizedBox(height: 20,),
+                    SizedBox(
+                      height: 20,
+                    ),
                     Container(
                       child: logo(),
                     ),
@@ -67,11 +65,12 @@ class _LoginState extends State<Login> {
                         style: GoogleFonts.openSans(
                             fontSize: 30.0,
                             fontWeight: FontWeight.bold,
-                            letterSpacing: 2
-                        ),
+                            letterSpacing: 2),
                       ),
                     ),
-                    SizedBox(height: 20,),
+                    SizedBox(
+                      height: 20,
+                    ),
                     //email
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -80,19 +79,20 @@ class _LoginState extends State<Login> {
                           'Email',
                           style: GoogleFonts.lato(),
                         ),
-                        SizedBox(height: 10,),
+                        SizedBox(
+                          height: 10,
+                        ),
                         Container(
                           alignment: Alignment.centerLeft,
                           decoration: BoxDecoration(
-                              borderRadius: BorderRadius.all(Radius.circular(10)),
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(10)),
                               boxShadow: [
                                 BoxShadow(
                                     color: Colors.grey.withOpacity(0.5),
                                     spreadRadius: 5,
-                                    offset: Offset(0,3)
-                                )
-                              ]
-                          ),
+                                    offset: Offset(0, 3))
+                              ]),
                           height: 60,
                           child: TextField(
                             controller: emailController,
@@ -106,13 +106,14 @@ class _LoginState extends State<Login> {
                                   color: Colors.white,
                                 ),
                                 hintText: 'Enter Your Email',
-                                hintStyle: GoogleFonts.lato()
-                            ),
+                                hintStyle: GoogleFonts.lato()),
                           ),
                         )
                       ],
                     ),
-                    SizedBox(height: 20,),
+                    SizedBox(
+                      height: 20,
+                    ),
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
@@ -120,19 +121,20 @@ class _LoginState extends State<Login> {
                           'Password',
                           style: GoogleFonts.lato(),
                         ),
-                        SizedBox(height: 10,),
+                        SizedBox(
+                          height: 10,
+                        ),
                         Container(
                           alignment: Alignment.centerLeft,
                           decoration: BoxDecoration(
-                              borderRadius: BorderRadius.all(Radius.circular(10)),
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(10)),
                               boxShadow: [
                                 BoxShadow(
                                     color: Colors.grey.withOpacity(0.5),
                                     spreadRadius: 5,
-                                    offset: Offset(0,3)
-                                )
-                              ]
-                          ),
+                                    offset: Offset(0, 3))
+                              ]),
                           height: 60,
                           child: TextField(
                             controller: passwordController,
@@ -146,13 +148,14 @@ class _LoginState extends State<Login> {
                                   color: Colors.white,
                                 ),
                                 hintText: 'Masukkan Password',
-                                hintStyle: GoogleFonts.lato()
-                            ),
+                                hintStyle: GoogleFonts.lato()),
                           ),
                         )
                       ],
                     ),
-                    SizedBox(height: 20,),
+                    SizedBox(
+                      height: 20,
+                    ),
                     Center(
                       child: Container(
                         padding: EdgeInsets.fromLTRB(10, 5, 10, 0),
@@ -160,27 +163,41 @@ class _LoginState extends State<Login> {
                         height: 50,
                         child: ElevatedButton(
                           onPressed: () async {
-                            User? user = await loginTest(email: emailController.text, password: passwordController.text, context: context);
-                            print(user);
-                            if(user != null){
-                              Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context)=>HomePage2()));
-                            }
-                            else{
-                              print('anjing');
+                            User? user = await loginTest(
+                                email: emailController.text,
+                                password: passwordController.text,
+                                context: context);
+                            if (user != null) {
+                              Navigator.of(context).pushReplacement(
+                                  MaterialPageRoute(
+                                      builder: (context) => HomePage2()));
+                              print(user);
+                            } else {
+                              ScaffoldMessenger.of(context)
+                                  .showSnackBar(SnackBar(
+                                content: Text(
+                                    'Email/Password salah, silahkan masukkan kembali'),
+                                duration: Duration(seconds: 5),
+                              ));
+                              emailController.clear();
+                              passwordController.clear();
                             }
                           },
-                          child: Text('Login', style: GoogleFonts.openSans(fontSize: 20),),
-                          style: ButtonStyle(
-                              backgroundColor: MaterialStateProperty.all<Color>(Color(0xff69BCFC)),
-                              shape: MaterialStateProperty.all<StadiumBorder>(
-                                  StadiumBorder(
-                                  )
-                              )
+                          child: Text(
+                            'Login',
+                            style: GoogleFonts.openSans(fontSize: 20),
                           ),
+                          style: ButtonStyle(
+                              backgroundColor: MaterialStateProperty.all<Color>(
+                                  Color(0xff69BCFC)),
+                              shape: MaterialStateProperty.all<StadiumBorder>(
+                                  StadiumBorder())),
                         ),
                       ),
                     ),
-                    SizedBox(height: 10,),
+                    SizedBox(
+                      height: 10,
+                    ),
                     Center(
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.center,
@@ -190,23 +207,40 @@ class _LoginState extends State<Login> {
                             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                             children: [
                               Container(
-                                child: IconButton(
-                                  onPressed: (){print('Google sign In');},
-                                  icon: Image.network(
-                                      'http://pngimg.com/uploads/google/google_PNG19635.png'
-                                  ),
-                                  iconSize: 50,
-                                )
-                              ),
+                                  child: IconButton(
+                                onPressed: () async {
+                                  try{
+                                    await authService.signInGoogle().then((value) async {
+                                      var FLUser = FirebaseAuth.instance.currentUser;
+                                      var FUser = FLUser!.uid;
+                                      var auth = FirebaseFirestore.instance.collection('users').doc(FUser);
+                                      await auth.set({
+                                        'uid' : FUser,
+                                        'nama' : FLUser.displayName,
+                                        'email' : FLUser.email,
+                                      });
+                                      print(FUser);
+                                      Navigator.of(context).pushReplacement(
+                                          MaterialPageRoute(
+                                              builder: (context) => HomePage2()));
+                                    });
+                                  } catch(e){
+                                    print(e.toString());
+                                  }
+                                },
+                                icon: Image.network(
+                                    'http://pngimg.com/uploads/google/google_PNG19635.png'),
+                                iconSize: 50,
+                              )),
                               Container(
                                   child: IconButton(
-                                    onPressed: (){print('Facebook Sign In');},
-                                    icon: Image.network(
-                                        'https://image.similarpng.com/very-thumbnail/2020/04/Popular-facebook-Logo-png.png'
-                                    ),
-                                    iconSize: 50,
-                                  )
-                              ),
+                                onPressed: () {
+                                  print('Facebook Sign In');
+                                },
+                                icon: Image.network(
+                                    'https://image.similarpng.com/very-thumbnail/2020/04/Popular-facebook-Logo-png.png'),
+                                iconSize: 50,
+                              )),
                             ],
                           )
                         ],
@@ -218,8 +252,11 @@ class _LoginState extends State<Login> {
                         children: [
                           Text("Didn't Have an Account Yet?"),
                           TextButton(
-                              onPressed: (){
-                                Navigator.push(context, MaterialPageRoute(builder: (context) => Register()));
+                              onPressed: () {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => Register()));
                               },
                               child: Text('Sign Up'))
                         ],

@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:wisata_kebumen/maps_test.dart';
 
 class SelectedWisata extends StatefulWidget {
   SelectedWisata({required this.index});
@@ -32,6 +33,7 @@ class _SelectedWisataState extends State<SelectedWisata> {
           );
         }
         var wisataDoc = snapshot.data;
+        var wasd = FirebaseFirestore.instance.collection('wisata').doc(widget.index).get();
         List<dynamic> pictures = wisataDoc!['pictures'];
         return Scaffold(
           body: Container(
@@ -75,6 +77,16 @@ class _SelectedWisataState extends State<SelectedWisata> {
                 ),
                 Text(
                   'Rating: $rating',
+                ),
+                SizedBox(height: 20,),
+                ElevatedButton(
+                  onPressed: (){
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => MapSample()));
+                  },
+                  child: Text('Location'),
                 )
               ],
             ),

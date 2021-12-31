@@ -1,9 +1,13 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.wisata_kebumen">
    <application
-        android:label="wisata_kebumen"
+        android:label="Wisata Kebumen"
         android:icon="@mipmap/ic_launcher">
-        <activity
+       <meta-data android:name="com.google.android.geo.API_KEY"
+           android:value="AIzaSyCw4VUTuiDyRjUlcIg1TKRw-CvzeggxUgA"/>
+       <meta-data android:name="com.here.sdk.access_key_id" android:value="_8HUaTp0CDyUS5XvIrYviQ" />
+       <meta-data android:name="com.here.sdk.access_key_secret" android:value="1aallaDaLuqBiHDWBES7NGXC3nJFl_f3iIOdW7f_sp7I8t0RD42b40nlhpjPqDymULB8xa05jgzV7UxAiaI_Kg" />
+       <activity
             android:name=".MainActivity"
             android:launchMode="singleTop"
             android:theme="@style/LaunchTheme"

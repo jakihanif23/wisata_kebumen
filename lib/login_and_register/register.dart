@@ -213,16 +213,18 @@ class _RegisterState extends State<Register> {
                           onPressed: () async {
                             if (_formKey.currentState!.validate()) {
                               try {
-                                authService.register(email, password)
+                                authService.register(email, password, nama)
                                     .then((value) async{
                                   User? user = FirebaseAuth.instance.currentUser;
-                                  await FirebaseFirestore.instance.collection('user').doc(user!.uid).set({
-                                    'uid' : user.uid,
+                                  var FUser = user!.uid;
+                                  await FirebaseFirestore.instance.collection('users').doc(FUser).set({
+                                    'uid' : FUser,
                                     'nama' : nama,
                                     'email' : email,
                                     'password' : password,
                                   });
                                 });
+
                                 ScaffoldMessenger.of(context)
                                     .showSnackBar(SnackBar(
                                   content: Text('Register Berhasil, Silahkan ke Halaman Login'),
@@ -251,7 +253,7 @@ class _RegisterState extends State<Register> {
                             }
                           },
                           child: Text(
-                            'Login',
+                            'Register',
                             style: GoogleFonts.openSans(fontSize: 20),
                           ),
                           style: ButtonStyle(
