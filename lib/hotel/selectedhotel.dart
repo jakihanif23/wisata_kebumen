@@ -8,34 +8,34 @@ import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:wisata_kebumen/maps_test.dart';
 import 'package:wisata_kebumen/wisata/komentar_wisata.dart';
 
-class SelectedWisata extends StatefulWidget {
-  SelectedWisata({required this.index});
+class SelectedHotel extends StatefulWidget {
+  SelectedHotel({required this.index});
   final String index;
 
   @override
-  State<SelectedWisata> createState() => _SelectedWisataState();
+  State<SelectedHotel> createState() => _SelectedHotelState();
 }
 
-class _SelectedWisataState extends State<SelectedWisata> {
+class _SelectedHotelState extends State<SelectedHotel> {
   final _pageController = PageController();
   double rating = 0.0;
   final komentarController = TextEditingController();
   String komen = "";
-  TextEditingController _ratingController=TextEditingController();
+  final _ratingController=TextEditingController();
 
   @override
   Widget build(BuildContext context) {
-    var wisataRef = FirebaseFirestore.instance.collection('wisata');
+    var  hotelRef = FirebaseFirestore.instance.collection('hotel');
     return StreamBuilder(
-      stream: wisataRef.doc(widget.index).snapshots(),
+      stream: hotelRef.doc(widget.index).snapshots(),
       builder: (BuildContext context, AsyncSnapshot<DocumentSnapshot> snapshot){
         if(!snapshot.hasData){
           return Center(
             child: CircularProgressIndicator(),
           );
         }
-        var wisataDoc = snapshot.data;
-        List<dynamic> pictures = wisataDoc!['pictures'];
+        var hotelDoc = snapshot.data;
+        List<dynamic> pictures = hotelDoc!['pictures'];
         return Scaffold(
           body: SingleChildScrollView(
             child: Container(
@@ -45,35 +45,35 @@ class _SelectedWisataState extends State<SelectedWisata> {
                   Container(
                     height: 320,
                     child: ListView.builder(
-                      itemCount: pictures.length,
-                      scrollDirection: Axis.horizontal,
-                      itemBuilder: (context, images){
-                        return Container(
-                          width: 400,
-                          height: 400,
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(10),
-                              image: DecorationImage(
-                                image: NetworkImage(pictures[images], scale: 0.1),
-                              )
-                          ),
-                        );
-                      }
+                        itemCount: pictures.length,
+                        scrollDirection: Axis.horizontal,
+                        itemBuilder: (context, images){
+                          return Container(
+                            width: 400,
+                            height: 400,
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(10),
+                                image: DecorationImage(
+                                  image: NetworkImage(pictures[images], scale: 0.1),
+                                )
+                            ),
+                          );
+                        }
                     ),
                   ),
-                  Text(wisataDoc['nama']),
+                  Text(hotelDoc['nama']),
                   SizedBox(height: 20,),
                   RatingBarIndicator(
-                    itemCount: 5,
-                    rating: double.parse(wisataDoc['rating']),
-                    itemBuilder: (context, _)=>Icon(Icons.star, color: Colors.amber,)
+                      itemCount: 5,
+                      rating: double.parse(hotelDoc['rating']),
+                      itemBuilder: (context, _)=>Icon(Icons.star, color: Colors.amber,)
                   ),
                   Text(
-                    'Rating: ${wisataDoc['rating']}',
+                    'Rating: ${hotelDoc['rating']}',
                   ),
                   SizedBox(height: 20,),
                   Container(
-                    child: Text(wisataDoc['description'], textAlign: TextAlign.justify,),
+                    child: Text(hotelDoc['description'], textAlign: TextAlign.justify,),
                   ),
                   SizedBox(height: 20,),
                   Column(
@@ -84,7 +84,7 @@ class _SelectedWisataState extends State<SelectedWisata> {
                         children: [
                           ElevatedButton(
                               onPressed: (){
-                                Navigator.of(context).push(MaterialPageRoute(builder: (context)=>KomentarWisata(index: wisataDoc['nama'],)));
+                                Navigator.of(context).push(MaterialPageRoute(builder: (context)=>KomentarWisata(index: hotelDoc['nama'],)));
                               },
                               child: Text('tampil komentar')
                           ),
@@ -129,7 +129,7 @@ class _SelectedWisataState extends State<SelectedWisata> {
                                             setState(() {
                                               komen = komentarController.text;
                                             });
-                                            wisataRef.doc(widget.index).collection('Komentar').doc(user!.uid).set(
+                                            hotelRef.doc(widget.index).collection('Komentar').doc(user!.uid).set(
                                                 {
                                                   'nama_user': '${user.displayName}',
                                                   'uid': '${user.uid}',
@@ -163,9 +163,9 @@ class _SelectedWisataState extends State<SelectedWisata> {
                                   context,
                                   MaterialPageRoute(
                                       builder: (context){
-                                        print(wisataDoc['lat']);
-                                        print(wisataDoc['lang']);
-                                        return MapSample(index: wisataDoc['lat'], index1: wisataDoc['lang'], index2: wisataDoc['nama'],);
+                                        print(hotelDoc['lat']);
+                                        print(hotelDoc['lang']);
+                                        return MapSample(index: hotelDoc['lat'], index1: hotelDoc['lang'], index2: hotelDoc['nama'],);
                                       }));
                             },
                             child: Text('Location'),

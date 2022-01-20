@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -8,42 +9,42 @@ import 'package:url_launcher/url_launcher.dart';
 class MapSample extends StatefulWidget {
   @override
   State<MapSample> createState() => MapSampleState();
+  MapSample({required this.index, required this.index1, required this.index2});
+  final String index;
+  final String index1;
+  final String index2;
 }
 
 class MapSampleState extends State<MapSample> {
   Completer<GoogleMapController> _controller = Completer();
-
-  static final CameraPosition _kGooglePlex = CameraPosition(
-    target: LatLng(-7.576694867088992, 109.6624692970534),
-    zoom: 14.4746,
-  );
-
-  static final CameraPosition _kLake = CameraPosition(
-      bearing: 192.8334901395799,
-      target: LatLng(-7.576694867088992, 109.6624692970534),
-      tilt: 59.440717697143555,
-      zoom: 19.151926040649414);
+  Set<Marker> _markers = {};
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: GoogleMap(
         mapType: MapType.hybrid,
-        initialCameraPosition: _kGooglePlex,
+        initialCameraPosition: CameraPosition(
+          target: LatLng(double.parse(widget.index), double.parse(widget.index1)),
+          zoom: 19.4746,
+        ),
         onMapCreated: (GoogleMapController controller) {
+          setState(() {
+            _markers.add(
+              Marker(
+                markerId: MarkerId(widget.index2),
+                position: LatLng(double.parse(widget.index), double.parse(widget.index1)),
+                infoWindow: InfoWindow(
+                  title: widget.index2
+                )
+              )
+            );
+          });
           _controller.complete(controller);
         },
-      ),
-      floatingActionButton: FloatingActionButton.extended(
-        onPressed: () => launch('https://goo.gl/maps/wU2bq3eemeyMkcLm7'),
-        label: Text('To the lake!'),
-        icon: Icon(Icons.directions_boat),
+        trafficEnabled: true,
+        markers: _markers,
       ),
     );
-  }
-
-  Future<void> _goToTheLake() async {
-    final GoogleMapController controller = await _controller.future;
-    controller.animateCamera(CameraUpdate.newCameraPosition(_kLake));
   }
 }

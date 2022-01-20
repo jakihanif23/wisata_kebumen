@@ -9,10 +9,11 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import 'package:tab_indicator_styler/tab_indicator_styler.dart';
+import 'package:wisata_kebumen/hotel/selectedhotel.dart';
 import 'package:wisata_kebumen/login_and_register/login.dart';
-import 'package:wisata_kebumen/restoran/detailrestoran.dart';
+import 'package:wisata_kebumen/restoran/selectedrestoran.dart';
 import 'package:wisata_kebumen/wisata/selectedwisata.dart';
-import 'package:wisata_kebumen/wisata/wisatamodel.dart';
+import 'package:wisata_kebumen/wisatamodel.dart';
 
 class HomePage2 extends StatefulWidget {
   const HomePage2({Key? key}) : super(key: key);
@@ -27,10 +28,10 @@ class _HomePage2State extends State<HomePage2> {
 
   @override
   Widget build(BuildContext context) {
-    FirebaseAuth.instance.authStateChanges().
-    listen((User? user) {
-      if (user == null){
-        Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context)=>Login()));
+    FirebaseAuth.instance.authStateChanges().listen((User? user) {
+      if (user == null) {
+        Navigator.of(context)
+            .pushReplacement(MaterialPageRoute(builder: (context) => Login()));
       }
     });
     return DefaultTabController(
@@ -280,7 +281,7 @@ class _HomePage2State extends State<HomePage2> {
                                         context,
                                         MaterialPageRoute(
                                             builder: (context) =>
-                                                DetailRestoran(
+                                                SelectedRestoran(
                                                     index: document['nama'])));
                                   },
                                 );
@@ -442,7 +443,7 @@ class _HomePage2State extends State<HomePage2> {
                                         context,
                                         MaterialPageRoute(
                                             builder: (context) =>
-                                                SelectedWisata(
+                                                SelectedHotel(
                                                     index: document['nama'])));
                                   },
                                 );
@@ -628,17 +629,22 @@ class _HomePage2State extends State<HomePage2> {
                         spacing: 5),
                   ),
                 ),
-                SizedBox(height: 30,),
+                SizedBox(
+                  height: 30,
+                ),
                 TextButton(
-                  onPressed: () async{
+                  onPressed: () async {
                     GoogleSignIn googleUserlogout = await GoogleSignIn();
                     await FirebaseAuth.instance.signOut();
                     googleUserlogout.signOut();
-                    Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context)=>Login()));
+                    Navigator.of(context).pushReplacement(
+                        MaterialPageRoute(builder: (context) => Login()));
                   },
                   child: Text('Logout'),
                 ),
-                SizedBox(height: 20,),
+                SizedBox(
+                  height: 20,
+                ),
                 Container(
                   child: Center(
                     child: Builder(

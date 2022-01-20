@@ -8,34 +8,32 @@ import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:wisata_kebumen/maps_test.dart';
 import 'package:wisata_kebumen/wisata/komentar_wisata.dart';
 
-class SelectedWisata extends StatefulWidget {
-  SelectedWisata({required this.index});
+class SelectedRestoran extends StatefulWidget {
+  SelectedRestoran({required this.index});
   final String index;
 
   @override
-  State<SelectedWisata> createState() => _SelectedWisataState();
+  State<SelectedRestoran> createState() => _SelectedRestoranState();
 }
 
-class _SelectedWisataState extends State<SelectedWisata> {
-  final _pageController = PageController();
+class _SelectedRestoranState extends State<SelectedRestoran> {
   double rating = 0.0;
   final komentarController = TextEditingController();
   String komen = "";
-  TextEditingController _ratingController=TextEditingController();
 
   @override
   Widget build(BuildContext context) {
-    var wisataRef = FirebaseFirestore.instance.collection('wisata');
+    var restoranRef = FirebaseFirestore.instance.collection('restoran');
     return StreamBuilder(
-      stream: wisataRef.doc(widget.index).snapshots(),
+      stream: restoranRef.doc(widget.index).snapshots(),
       builder: (BuildContext context, AsyncSnapshot<DocumentSnapshot> snapshot){
         if(!snapshot.hasData){
           return Center(
             child: CircularProgressIndicator(),
           );
         }
-        var wisataDoc = snapshot.data;
-        List<dynamic> pictures = wisataDoc!['pictures'];
+        var restoranDoc = snapshot.data;
+        List<dynamic> pictures = restoranDoc!['pictures'];
         return Scaffold(
           body: SingleChildScrollView(
             child: Container(
@@ -45,35 +43,35 @@ class _SelectedWisataState extends State<SelectedWisata> {
                   Container(
                     height: 320,
                     child: ListView.builder(
-                      itemCount: pictures.length,
-                      scrollDirection: Axis.horizontal,
-                      itemBuilder: (context, images){
-                        return Container(
-                          width: 400,
-                          height: 400,
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(10),
-                              image: DecorationImage(
-                                image: NetworkImage(pictures[images], scale: 0.1),
-                              )
-                          ),
-                        );
-                      }
+                        itemCount: pictures.length,
+                        scrollDirection: Axis.horizontal,
+                        itemBuilder: (context, images){
+                          return Container(
+                            width: 400,
+                            height: 400,
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(10),
+                                image: DecorationImage(
+                                  image: NetworkImage(pictures[images], scale: 0.1),
+                                )
+                            ),
+                          );
+                        }
                     ),
                   ),
-                  Text(wisataDoc['nama']),
+                  Text(restoranDoc['nama']),
                   SizedBox(height: 20,),
                   RatingBarIndicator(
-                    itemCount: 5,
-                    rating: double.parse(wisataDoc['rating']),
-                    itemBuilder: (context, _)=>Icon(Icons.star, color: Colors.amber,)
+                      itemCount: 5,
+                      rating: double.parse(restoranDoc['rating']),
+                      itemBuilder: (context, _)=>Icon(Icons.star, color: Colors.amber,)
                   ),
                   Text(
-                    'Rating: ${wisataDoc['rating']}',
+                    'Rating: ${restoranDoc['rating']}',
                   ),
                   SizedBox(height: 20,),
                   Container(
-                    child: Text(wisataDoc['description'], textAlign: TextAlign.justify,),
+                    child: Text(restoranDoc['description'], textAlign: TextAlign.justify,),
                   ),
                   SizedBox(height: 20,),
                   Column(
@@ -84,7 +82,7 @@ class _SelectedWisataState extends State<SelectedWisata> {
                         children: [
                           ElevatedButton(
                               onPressed: (){
-                                Navigator.of(context).push(MaterialPageRoute(builder: (context)=>KomentarWisata(index: wisataDoc['nama'],)));
+                                Navigator.of(context).push(MaterialPageRoute(builder: (context)=>KomentarWisata(index: restoranDoc['nama'],)));
                               },
                               child: Text('tampil komentar')
                           ),
@@ -129,7 +127,7 @@ class _SelectedWisataState extends State<SelectedWisata> {
                                             setState(() {
                                               komen = komentarController.text;
                                             });
-                                            wisataRef.doc(widget.index).collection('Komentar').doc(user!.uid).set(
+                                            restoranRef.doc(widget.index).collection('Komentar').doc(user!.uid).set(
                                                 {
                                                   'nama_user': '${user.displayName}',
                                                   'uid': '${user.uid}',
@@ -163,9 +161,10 @@ class _SelectedWisataState extends State<SelectedWisata> {
                                   context,
                                   MaterialPageRoute(
                                       builder: (context){
-                                        print(wisataDoc['lat']);
-                                        print(wisataDoc['lang']);
-                                        return MapSample(index: wisataDoc['lat'], index1: wisataDoc['lang'], index2: wisataDoc['nama'],);
+                                        print(restoranDoc['lat']);
+                                        print(restoranDoc['lang']);
+                                        return MapSample(index: restoranDoc['lat'], index1: restoranDoc['lang'], index2: restoranDoc['nama'],);
+                                        return MapSample(index: restoranDoc['lat'], index1: restoranDoc['lang'], index2: restoranDoc['nama'],);
                                       }));
                             },
                             child: Text('Location'),
