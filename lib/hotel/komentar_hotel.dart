@@ -2,27 +2,27 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:wisata_kebumen/ItemCard.dart';
 
-class KomentarWisata extends StatefulWidget {
-  KomentarWisata({required this.index});
+class KomentarHotel extends StatefulWidget {
+  KomentarHotel({required this.index});
   final String index;
   @override
-  _KomentarWisataState createState() => _KomentarWisataState();
+  _KomentarHotelState createState() => _KomentarHotelState();
 }
 
-class _KomentarWisataState extends State<KomentarWisata> {
+class _KomentarHotelState extends State<KomentarHotel> {
 
-  var wisataref = FirebaseFirestore.instance.collection('wisata');
+  var hotelref = FirebaseFirestore.instance.collection('hotel');
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Komentar Wisata ${widget.index}"),
+        title: Text("Komentar Hotel ${widget.index}"),
       ),
       body: ListView(
         children: [
           StreamBuilder<QuerySnapshot>(
-            stream: wisataref.doc(widget.index).collection('Komentar').snapshots(),
+            stream: hotelref.doc(widget.index).collection('Komentar').snapshots(),
             builder: (_,snapshot) {
               if (!snapshot.hasData) {
                 return Center(

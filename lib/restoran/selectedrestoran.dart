@@ -6,6 +6,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:wisata_kebumen/maps_test.dart';
+import 'package:wisata_kebumen/restoran/komentar_restoran.dart';
 import 'package:wisata_kebumen/wisata/komentar_wisata.dart';
 
 class SelectedRestoran extends StatefulWidget {
@@ -82,7 +83,7 @@ class _SelectedRestoranState extends State<SelectedRestoran> {
                         children: [
                           ElevatedButton(
                               onPressed: (){
-                                Navigator.of(context).push(MaterialPageRoute(builder: (context)=>KomentarWisata(index: restoranDoc['nama'],)));
+                                Navigator.of(context).push(MaterialPageRoute(builder: (context)=>KomentarRestoran(index: restoranDoc['nama'],)));
                               },
                               child: Text('tampil komentar')
                           ),
@@ -163,7 +164,6 @@ class _SelectedRestoranState extends State<SelectedRestoran> {
                                       builder: (context){
                                         print(restoranDoc['lat']);
                                         print(restoranDoc['lang']);
-                                        return MapSample(index: restoranDoc['lat'], index1: restoranDoc['lang'], index2: restoranDoc['nama'],);
                                         return MapSample(index: restoranDoc['lat'], index1: restoranDoc['lang'], index2: restoranDoc['nama'],);
                                       }));
                             },

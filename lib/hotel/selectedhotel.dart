@@ -5,6 +5,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+import 'package:wisata_kebumen/hotel/komentar_hotel.dart';
 import 'package:wisata_kebumen/maps_test.dart';
 import 'package:wisata_kebumen/wisata/komentar_wisata.dart';
 
@@ -84,7 +85,7 @@ class _SelectedHotelState extends State<SelectedHotel> {
                         children: [
                           ElevatedButton(
                               onPressed: (){
-                                Navigator.of(context).push(MaterialPageRoute(builder: (context)=>KomentarWisata(index: hotelDoc['nama'],)));
+                                Navigator.of(context).push(MaterialPageRoute(builder: (context)=>KomentarHotel(index: hotelDoc['nama'],)));
                               },
                               child: Text('tampil komentar')
                           ),
