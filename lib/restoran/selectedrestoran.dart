@@ -5,7 +5,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
-import 'package:wisata_kebumen/maps_test.dart';
+import 'package:wisata_kebumen/model_and_maps/google_maps.dart';
 import 'package:wisata_kebumen/restoran/komentar_restoran.dart';
 import 'package:wisata_kebumen/wisata/komentar_wisata.dart';
 

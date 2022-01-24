@@ -1,6 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:wisata_kebumen/ItemCard.dart';
+import 'package:wisata_kebumen/card/ItemCard.dart';
 
 class KomentarHotel extends StatefulWidget {
   KomentarHotel({required this.index});

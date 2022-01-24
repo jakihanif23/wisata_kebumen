@@ -11,9 +11,9 @@ import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import 'package:tab_indicator_styler/tab_indicator_styler.dart';
 import 'package:wisata_kebumen/hotel/selectedhotel.dart';
 import 'package:wisata_kebumen/login_and_register/login.dart';
+import 'package:wisata_kebumen/model_and_maps/model.dart';
 import 'package:wisata_kebumen/restoran/selectedrestoran.dart';
 import 'package:wisata_kebumen/wisata/selectedwisata.dart';
-import 'package:wisata_kebumen/wisatamodel.dart';
 
 class HomePage2 extends StatefulWidget {
   const HomePage2({Key? key}) : super(key: key);
