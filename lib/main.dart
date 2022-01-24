@@ -1,6 +1,7 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:wisata_kebumen/homepage2.dart';
+import 'package:wisata_kebumen/loading.dart';
 
 
 void main() async {
@@ -15,7 +16,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: HomePage2(),
+      home: Loading(),
     );
   }
 }

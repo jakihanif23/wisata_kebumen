@@ -28,12 +28,6 @@ class _HomePage2State extends State<HomePage2> {
 
   @override
   Widget build(BuildContext context) {
-    FirebaseAuth.instance.authStateChanges().listen((User? user) {
-      if (user == null) {
-        Navigator.of(context)
-            .pushReplacement(MaterialPageRoute(builder: (context) => Login()));
-      }
-    });
     return DefaultTabController(
       length: 6,
       child: Scaffold(
@@ -46,6 +40,7 @@ class _HomePage2State extends State<HomePage2> {
                   height: 50,
                   margin: EdgeInsets.only(top: 20, left: 28.8, right: 28.8),
                   child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Container(
                         height: 50,
@@ -54,9 +49,21 @@ class _HomePage2State extends State<HomePage2> {
                         decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(10),
                             color: Color(0x080a0928)),
-                        child: SvgPicture.asset('assets/svg/newlists.svg',
-                            color: Colors.black54),
+                        child: InkWell(
+                          child: SvgPicture.asset('assets/svg/newlists.svg',
+                              color: Colors.black54),
+                        ),
                       ),
+                      Builder(
+                        builder: (context) {
+                          User? user = FirebaseAuth.instance.currentUser;
+                          if (user == null) {
+                            return Text('');
+                          }else{
+                            return Text('Welcome, ${user.displayName.toString()}');
+                          }
+                        },
+                      )
                     ],
                   ),
                 ),
@@ -645,16 +652,6 @@ class _HomePage2State extends State<HomePage2> {
                 SizedBox(
                   height: 20,
                 ),
-                Container(
-                  child: Center(
-                    child: Builder(
-                      builder: (context) {
-                        User? user = FirebaseAuth.instance.currentUser;
-                        return Text(user!.displayName.toString());
-                      },
-                    ),
-                  ),
-                )
               ],
             ),
           ),
