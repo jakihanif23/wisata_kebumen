@@ -28,11 +28,11 @@ class _HomePage2State extends State<HomePage2> {
 
   @override
   Widget build(BuildContext context) {
-    return DefaultTabController(
-      length: 6,
-      child: Scaffold(
-        body: SafeArea(
-          child: Container(
+    return Scaffold(
+      body: SafeArea(
+        child: Container(
+          child: DefaultTabController(
+            length: 6,
             child: ListView(
               physics: BouncingScrollPhysics(),
               children: [

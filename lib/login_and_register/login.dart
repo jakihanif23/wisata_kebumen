@@ -5,6 +5,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:wisata_kebumen/homepage/homeside.dart';
 import 'package:wisata_kebumen/homepage2.dart';
 import 'package:wisata_kebumen/login_and_register/auth_service.dart';
 import 'package:wisata_kebumen/login_and_register/register.dart';
@@ -171,7 +172,7 @@ class _LoginState extends State<Login> {
                               if (user != null) {
                                 Navigator.of(context).pushReplacement(
                                     MaterialPageRoute(
-                                        builder: (context) => HomePage2()));
+                                        builder: (context) => Side()));
                                 print(user);
                               } else {
                                 ScaffoldMessenger.of(context)
