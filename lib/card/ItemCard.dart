@@ -3,7 +3,7 @@ import 'package:google_fonts/google_fonts.dart';
 
 class ItemCard extends StatelessWidget {
   final String nama_user;
-  final String rating;
+  final num rating;
   final String komentar;
 
   ItemCard(this.nama_user, this.rating, this.komentar);

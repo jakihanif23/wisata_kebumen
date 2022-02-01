@@ -15,14 +15,14 @@ import 'package:wisata_kebumen/model_and_maps/model.dart';
 import 'package:wisata_kebumen/restoran/selectedrestoran.dart';
 import 'package:wisata_kebumen/wisata/selectedwisata.dart';
 
-class Side extends StatelessWidget {
-  const Side({Key? key}) : super(key: key);
+class HomePage extends StatelessWidget {
+  const HomePage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      theme: ThemeData(fontFamily: GoogleFonts.nunito().toString()),
+      theme: ThemeData(fontFamily: GoogleFonts.nunitoSans().toString()),
       title: "SideBar",
       home: Scaffold(
         body: Container(
@@ -54,7 +54,7 @@ class _AppContainerState extends State<AppContainer> {
   ];
 
   final List<Widget> coba= [
-    Side(),
+    HomePage(),
     SelectedRestoran(index: 'Bale Raos CN Sewelas'),
     SelectedRestoran(index: 'Bale Raos CN Sewelas')
   ];

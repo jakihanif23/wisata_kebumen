@@ -29,6 +29,8 @@ class _KomentarWisataState extends State<KomentarWisata> {
                   child: CircularProgressIndicator(),
                 );
               } else{
+                var wasd = snapshot.data!.docs.length;
+                print(wasd);
                 return Column(
                   children: snapshot.data!.docs
                       .map((e) =>

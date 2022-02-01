@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:wisata_kebumen/homepage2.dart';
 import 'package:wisata_kebumen/loading.dart';
 
-import 'homepage/homeside.dart';
+import 'homepage/homepage.dart';
 
 
 void main() async {

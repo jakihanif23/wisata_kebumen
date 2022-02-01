@@ -1,3 +1,4 @@
+import 'dart:ffi';
 import 'dart:ui';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -31,7 +32,6 @@ class _SelectedWisataState extends State<SelectedWisata> {
       stream: wisataRef.doc(widget.index).snapshots(),
       builder: (BuildContext context,
           AsyncSnapshot<DocumentSnapshot> snapshot) {
-        var sum = wisataRef.doc(widget.index).collection('Komentar');
         if (!snapshot.hasData) {
           return Center(
             child: CircularProgressIndicator(),
@@ -39,6 +39,7 @@ class _SelectedWisataState extends State<SelectedWisata> {
         }
         var wisataDoc = snapshot.data;
         List<dynamic> pictures = wisataDoc!['pictures'];
+        final kom = wisataRef.doc(widget.index).collection('Komentar');
         return Scaffold(
           body: SingleChildScrollView(
             child: Container(
@@ -67,15 +68,55 @@ class _SelectedWisataState extends State<SelectedWisata> {
                   ),
                   Text(wisataDoc['nama']),
                   SizedBox(height: 20,),
-                  RatingBarIndicator(
-                      itemCount: 5,
-                      rating: double.parse(wisataDoc['rating']),
-                      itemBuilder: (context, _) =>
-                          Icon(Icons.star, color: Colors.amber,)
+                  // RatingBarIndicator(
+                  //     itemCount: 5,
+                  //     rating: double.parse(wisataDoc['rating']),
+                  //     itemBuilder: (context, _) =>
+                  //         Icon(Icons.star, color: Colors.amber,)
+                  // ),
+                  // SizedBox(height: 10,),
+                  StreamBuilder<QuerySnapshot>(
+                    stream: kom.snapshots(),
+                    builder: (_, snapshot) {
+                      if (!snapshot.hasData) {
+                        return Text("Rating 0.0");
+                      } else {
+                        var co = snapshot.data!.docs;
+                        var wasd = co.length;
+                        var rat = co.map((e) => e['rating']).toList();
+                        double sum = rat.fold(0, (p, c) => p + c);
+                        var hasil = sum / wasd;
+                        return Container(
+                          child: Column(
+                            children: [
+                              InkWell(
+                                onTap: (){
+                                  Navigator.of(context).push(MaterialPageRoute(
+                                      builder: (context) =>
+                                          KomentarWisata(
+                                            index: wisataDoc['nama'],)));
+                                },
+                                child: RatingBarIndicator(
+                                    itemCount: 5,
+                                    rating: hasil,
+                                    itemBuilder: (context, _) {
+                                      return Icon(
+                                        Icons.star,
+                                        color: Colors.amber,
+                                      );
+                                    }
+                                ),
+                              ),
+                              Text('Rating ${hasil.toString()}')
+                            ],
+                          ),
+                        );
+                      }
+                    },
                   ),
-                  Text(
-                    'Rating: ${wisataDoc['rating']}',
-                  ),
+                  // Text(
+                  //   'Rating: ${wisataDoc['rating']}',
+                  // ),
                   SizedBox(height: 20,),
                   Container(
                     child: Text(
@@ -160,7 +201,7 @@ class _SelectedWisataState extends State<SelectedWisata> {
                                                 '${user.displayName}',
                                                 'uid': '${user.uid}',
                                                 'komentar': '${komen}',
-                                                'rating': '$rating'
+                                                'rating': this.rating
                                               });
                                               komentarController.clear();
                                               ScaffoldMessenger.of(context)

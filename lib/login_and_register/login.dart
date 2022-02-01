@@ -4,9 +4,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter/material.dart';
-import 'package:google_sign_in/google_sign_in.dart';
-import 'package:wisata_kebumen/homepage/homeside.dart';
-import 'package:wisata_kebumen/homepage2.dart';
+import 'package:wisata_kebumen/homepage/homepage.dart';
 import 'package:wisata_kebumen/login_and_register/auth_service.dart';
 import 'package:wisata_kebumen/login_and_register/register.dart';
 import 'package:wisata_kebumen/login_and_register/widget.dart';
@@ -172,7 +170,7 @@ class _LoginState extends State<Login> {
                               if (user != null) {
                                 Navigator.of(context).pushReplacement(
                                     MaterialPageRoute(
-                                        builder: (context) => Side()));
+                                        builder: (context) => HomePage()));
                                 print(user);
                               } else {
                                 ScaffoldMessenger.of(context)
@@ -224,7 +222,7 @@ class _LoginState extends State<Login> {
                                         print(FUser);
                                         Navigator.of(context).pushReplacement(
                                             MaterialPageRoute(
-                                                builder: (context) => HomePage2()));
+                                                builder: (context) => HomePage()));
                                       });
                                     } catch(e){
                                       print(e.toString());

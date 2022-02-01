@@ -1,8 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:wisata_kebumen/homepage2.dart';
 
-import 'homepage/homeside.dart';
+import 'homepage/homepage.dart';
 import 'login_and_register/login.dart';
 
 class Loading extends StatelessWidget {
@@ -16,7 +15,7 @@ class Loading extends StatelessWidget {
             .pushReplacement(MaterialPageRoute(builder: (context) => Login()));
       } else{
         Navigator.of(context)
-            .pushReplacement(MaterialPageRoute(builder: (context) => Side()));
+            .pushReplacement(MaterialPageRoute(builder: (context) => HomePage()));
       }
     });
     return Scaffold(
