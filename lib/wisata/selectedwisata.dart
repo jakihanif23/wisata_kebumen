@@ -141,81 +141,98 @@ class _SelectedWisataState extends State<SelectedWisata> {
                           ElevatedButton(
                             onPressed: () {
                               User? user = FirebaseAuth.instance.currentUser;
-                              showDialog(
+                              if (user == null) {
+                                showDialog(
                                   context: context,
-                                  builder: (context) {
-                                    double wasd = 0.0;
+                                  builder: (context){
                                     return AlertDialog(
                                       title: Text('Komentar'),
-                                      content: SingleChildScrollView(
-                                        child: Container(
-                                          height: 200,
-                                          child: Column(
-                                            children: [
-                                              TextField(
-                                                controller:
-                                                komentarController,
-                                                autofocus: true,
-                                                decoration: InputDecoration(
-                                                    hintText:
-                                                    'Masukkan Komentar',
-                                                    labelText:
-                                                    'Masukkan Komentar'),
-                                              ),
-                                              SizedBox(
-                                                height: 30,
-                                              ),
-                                              RatingBar.builder(
-                                                  initialRating: this.rating,
-                                                  minRating: 1,
-                                                  updateOnDrag: true,
-                                                  allowHalfRating: true,
-                                                  itemBuilder: (context,
-                                                      _) =>
-                                                      Icon(
-                                                        Icons.star,
-                                                        color: Colors.amber,
-                                                      ),
-                                                  onRatingUpdate:
-                                                      (rating) =>
-                                                      setState(() {
-                                                        this.rating = rating;
-                                                      })),
-                                            ],
-                                          ),
-                                        ),
-                                      ),
+                                      content: Text('Anda Belum Login, Silahkan Login Terlebih Dahulu'),
                                       actions: [
                                         TextButton(
-                                            onPressed: () {
-                                              setState(() {
-                                                komen =
-                                                    komentarController.text;
-                                              });
-                                              wisataRef
-                                                  .doc(widget.index)
-                                                  .collection('Komentar')
-                                                  .doc(user!.uid)
-                                                  .set({
-                                                'nama_user':
-                                                '${user.displayName}',
-                                                'uid': '${user.uid}',
-                                                'komentar': '${komen}',
-                                                'rating': this.rating
-                                              });
-                                              komentarController.clear();
-                                              ScaffoldMessenger.of(context)
-                                                  .showSnackBar(SnackBar(
-                                                content: Text(
-                                                    'Berhasil Menambahkan Komentar'),
-                                                duration:
-                                                Duration(seconds: 5),
-                                              ));
-                                            },
-                                            child: Text('Input'))
+                                            onPressed: () => Navigator.pop(context, 'OK'),
+                                            child: Text('Oke'))
                                       ],
                                     );
                                   });
+                              }else{
+                                print(user);
+                                showDialog(
+                                    context: context,
+                                    builder: (context) {
+                                      double wasd = 0.0;
+                                      return AlertDialog(
+                                        title: Text('Komentar'),
+                                        content: SingleChildScrollView(
+                                          child: Container(
+                                            height: 200,
+                                            child: Column(
+                                              children: [
+                                                TextField(
+                                                  controller:
+                                                  komentarController,
+                                                  autofocus: true,
+                                                  decoration: InputDecoration(
+                                                      hintText:
+                                                      'Masukkan Komentar',
+                                                      labelText:
+                                                      'Masukkan Komentar'),
+                                                ),
+                                                SizedBox(
+                                                  height: 30,
+                                                ),
+                                                RatingBar.builder(
+                                                    initialRating: this.rating,
+                                                    minRating: 1,
+                                                    updateOnDrag: true,
+                                                    allowHalfRating: true,
+                                                    itemBuilder: (context,
+                                                        _) =>
+                                                        Icon(
+                                                          Icons.star,
+                                                          color: Colors.amber,
+                                                        ),
+                                                    onRatingUpdate:
+                                                        (rating) =>
+                                                        setState(() {
+                                                          this.rating = rating;
+                                                        })),
+                                              ],
+                                            ),
+                                          ),
+                                        ),
+                                        actions: [
+                                          TextButton(
+                                              onPressed: () {
+                                                setState(() {
+                                                  komen =
+                                                      komentarController.text;
+                                                });
+                                                wisataRef
+                                                    .doc(widget.index)
+                                                    .collection('Komentar')
+                                                    .doc(user.uid)
+                                                    .set({
+                                                  'nama_user':
+                                                  '${user.displayName}',
+                                                  'uid': '${user.uid}',
+                                                  'komentar': '${komen}',
+                                                  'rating': this.rating
+                                                });
+                                                komentarController.clear();
+                                                ScaffoldMessenger.of(context)
+                                                    .showSnackBar(SnackBar(
+                                                  content: Text(
+                                                      'Berhasil Menambahkan Komentar'),
+                                                  duration:
+                                                  Duration(seconds: 5),
+                                                ));
+                                              },
+                                              child: Text('Input'))
+                                        ],
+                                      );
+                                    });
+                              }
                             },
                             child: Text('tambah komentar'),
                           ),
@@ -254,3 +271,79 @@ class _SelectedWisataState extends State<SelectedWisata> {
     );
   }
 }
+
+// showDialog(
+//     context: context,
+//     builder: (context) {
+//       double wasd = 0.0;
+//       return AlertDialog(
+//         title: Text('Komentar'),
+//         content: SingleChildScrollView(
+//           child: Container(
+//             height: 200,
+//             child: Column(
+//               children: [
+//                 TextField(
+//                   controller:
+//                   komentarController,
+//                   autofocus: true,
+//                   decoration: InputDecoration(
+//                       hintText:
+//                       'Masukkan Komentar',
+//                       labelText:
+//                       'Masukkan Komentar'),
+//                 ),
+//                 SizedBox(
+//                   height: 30,
+//                 ),
+//                 RatingBar.builder(
+//                     initialRating: this.rating,
+//                     minRating: 1,
+//                     updateOnDrag: true,
+//                     allowHalfRating: true,
+//                     itemBuilder: (context,
+//                         _) =>
+//                         Icon(
+//                           Icons.star,
+//                           color: Colors.amber,
+//                         ),
+//                     onRatingUpdate:
+//                         (rating) =>
+//                         setState(() {
+//                           this.rating = rating;
+//                         })),
+//               ],
+//             ),
+//           ),
+//         ),
+//         actions: [
+//           TextButton(
+//               onPressed: () {
+//                 setState(() {
+//                   komen =
+//                       komentarController.text;
+//                 });
+//                 wisataRef
+//                     .doc(widget.index)
+//                     .collection('Komentar')
+//                     .doc(user!.uid)
+//                     .set({
+//                   'nama_user':
+//                   '${user.displayName}',
+//                   'uid': '${user.uid}',
+//                   'komentar': '${komen}',
+//                   'rating': this.rating
+//                 });
+//                 komentarController.clear();
+//                 ScaffoldMessenger.of(context)
+//                     .showSnackBar(SnackBar(
+//                   content: Text(
+//                       'Berhasil Menambahkan Komentar'),
+//                   duration:
+//                   Duration(seconds: 5),
+//                 ));
+//               },
+//               child: Text('Input'))
+//         ],
+//       );
+//     });

@@ -10,6 +10,7 @@ import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import 'package:tab_indicator_styler/tab_indicator_styler.dart';
 import 'package:wisata_kebumen/card/menu.dart';
 import 'package:wisata_kebumen/hotel/selectedhotel.dart';
+import 'package:wisata_kebumen/loading.dart';
 import 'package:wisata_kebumen/login_and_register/login.dart';
 import 'package:wisata_kebumen/model_and_maps/model.dart';
 import 'package:wisata_kebumen/restoran/selectedrestoran.dart';
@@ -112,34 +113,73 @@ class _AppContainerState extends State<AppContainer> {
                                     itemText: menuitems[index]),
                               ))),
                 ),
-                InkWell(
-                  onTap: () async {
-                    GoogleSignIn googleUserlogout = await GoogleSignIn();
-                    await FirebaseAuth.instance.signOut();
-                    googleUserlogout.signOut();
-                    Navigator.of(context).pushReplacement(
-                        MaterialPageRoute(builder: (context) => Login()));
-                  },
-                  child: Container(
-                    child: Row(
-                      children: [
-                        Container(
-                            padding: EdgeInsets.all(20),
-                            child: Icon(
-                              Icons.logout,
-                              color: Colors.white,
-                            )
+                Builder(
+                  builder: (context){
+                    User? user = FirebaseAuth.instance.currentUser;
+                    if (user == null) {
+                      return Container(
+                        child: InkWell(
+                          onTap: () async {
+                            Navigator.of(context).pushReplacement(
+                                MaterialPageRoute(builder: (context) => Login()));
+                          },
+                          child: Container(
+                            child: Row(
+                              children: [
+                                Container(
+                                    padding: EdgeInsets.all(20),
+                                    child: Icon(
+                                      Icons.login,
+                                      color: Colors.white,
+                                    )
+                                ),
+                                Container(
+                                    padding: EdgeInsets.all(20),
+                                    child: Text(
+                                      "Login",
+                                      style: TextStyle(color: Colors.white, fontSize: 16),
+                                    )
+                                )
+                              ],
+                            ),
+                          ),
                         ),
-                        Container(
-                            padding: EdgeInsets.all(20),
-                            child: Text(
-                              "Logout",
-                              style: TextStyle(color: Colors.white, fontSize: 16),
-                            ))
-                      ],
-                    ),
-                  ),
-                ),
+                      );
+                    }else{
+                      print(user);
+                      return Container(
+                        child: InkWell(
+                          onTap: () async {
+                            GoogleSignIn googleUserlogout = await GoogleSignIn();
+                            await FirebaseAuth.instance.signOut();
+                            googleUserlogout.signOut();
+                            Navigator.of(context).pushReplacement(
+                                MaterialPageRoute(builder: (context) => Loading()));
+                          },
+                          child: Container(
+                            child: Row(
+                              children: [
+                                Container(
+                                    padding: EdgeInsets.all(20),
+                                    child: Icon(
+                                      Icons.logout,
+                                      color: Colors.white,
+                                    )
+                                ),
+                                Container(
+                                    padding: EdgeInsets.all(20),
+                                    child: Text(
+                                      "Logout",
+                                      style: TextStyle(color: Colors.white, fontSize: 16),
+                                    ))
+                              ],
+                            ),
+                          ),
+                        ),
+                      );
+                    }
+                  }
+                )
               ],
             ),
           ),
@@ -183,6 +223,7 @@ class _AppContainerState extends State<AppContainer> {
                             if (user == null) {
                               return Text('');
                             }else{
+                              print(user);
                               return Text('Welcome, ${user.displayName.toString()}');
                             }
                           },

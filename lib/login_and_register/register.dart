@@ -24,6 +24,7 @@ class _RegisterState extends State<Register> {
   String password = '';
   String nama = '';
   final AuthService authService = AuthService();
+  final auth = FirebaseAuth.instance;
 
   @override
   Widget build(BuildContext context) {
@@ -73,7 +74,7 @@ class _RegisterState extends State<Register> {
                           alignment: Alignment.centerLeft,
                           decoration: BoxDecoration(
                               borderRadius:
-                              BorderRadius.all(Radius.circular(10)),
+                                  BorderRadius.all(Radius.circular(10)),
                               boxShadow: [
                                 BoxShadow(
                                     color: Colors.grey.withOpacity(0.5),
@@ -84,7 +85,7 @@ class _RegisterState extends State<Register> {
                           child: TextFormField(
                             controller: _controller1,
                             validator: (val) =>
-                            val!.isEmpty ? 'Masukkan Nama Anda' : null,
+                                val!.isEmpty ? 'Masukkan Nama Anda' : null,
                             onChanged: (val) {
                               nama = val;
                             },
@@ -121,7 +122,7 @@ class _RegisterState extends State<Register> {
                           alignment: Alignment.centerLeft,
                           decoration: BoxDecoration(
                               borderRadius:
-                              BorderRadius.all(Radius.circular(10)),
+                                  BorderRadius.all(Radius.circular(10)),
                               boxShadow: [
                                 BoxShadow(
                                     color: Colors.grey.withOpacity(0.5),
@@ -132,7 +133,7 @@ class _RegisterState extends State<Register> {
                           child: TextFormField(
                             controller: _controller2,
                             validator: (val) =>
-                            val!.isEmpty ? 'Masukkan Email Anda' : null,
+                                val!.isEmpty ? 'Masukkan Email Anda' : null,
                             onChanged: (val) {
                               email = val;
                             },
@@ -170,7 +171,7 @@ class _RegisterState extends State<Register> {
                           alignment: Alignment.centerLeft,
                           decoration: BoxDecoration(
                               borderRadius:
-                              BorderRadius.all(Radius.circular(10)),
+                                  BorderRadius.all(Radius.circular(10)),
                               boxShadow: [
                                 BoxShadow(
                                     color: Colors.grey.withOpacity(0.5),
@@ -212,44 +213,11 @@ class _RegisterState extends State<Register> {
                         child: ElevatedButton(
                           onPressed: () async {
                             if (_formKey.currentState!.validate()) {
-                              try {
-                                authService.register(email, password, nama)
-                                    .then((value) async{
-                                  User? user = FirebaseAuth.instance.currentUser;
-                                  var FUser = user!.uid;
-                                  await FirebaseFirestore.instance.collection('users').doc(FUser).set({
-                                    'uid' : FUser,
-                                    'nama' : nama,
-                                    'email' : email,
-                                    'password' : password,
-                                  });
-                                });
-
-                                ScaffoldMessenger.of(context)
-                                    .showSnackBar(SnackBar(
-                                  content: Text('Register Berhasil, Silahkan ke Halaman Login'),
-                                  duration: Duration(seconds: 5),
-                                ));
-                                _controller1.clear();
-                                _controller2.clear();
-                                _controller3.clear();
-                              } on FirebaseAuthException catch (e) {
-                                showDialog(
-                                    context: context,
-                                    builder: (ctx) => AlertDialog(
-                                      title: Text('Registrasi Failed'),
-                                      content: Text('${e.message}'),
-                                      actions: [
-                                        TextButton(
-                                          onPressed: () {
-                                            Navigator.of(ctx).pop();
-                                          },
-                                          child: Text('Okay'),
-                                        )
-                                      ],
-                                    )
-                                );
-                              }
+                              _register(email, password);
+                              _controller1.clear();
+                              _controller2.clear();
+                              _controller3.clear();
+                              print(auth.currentUser);
                             }
                           },
                           child: Text(
@@ -274,7 +242,9 @@ class _RegisterState extends State<Register> {
                           Text("Already Have an Account?"),
                           TextButton(
                               onPressed: () {
-                                Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context)=>Login()));
+                                Navigator.of(context).pushReplacement(
+                                    MaterialPageRoute(
+                                        builder: (context) => Login()));
                               },
                               child: Text('Sign In'))
                         ],
@@ -288,5 +258,42 @@ class _RegisterState extends State<Register> {
         ),
       ),
     );
+  }
+
+  _register(String _email, String _password) async {
+    try {
+      await auth
+          .createUserWithEmailAndPassword(email: _email, password: _password)
+          .then((value) async {
+        User? user = FirebaseAuth.instance.currentUser;
+        user!.updateDisplayName(nama);
+        var FUser = user.uid;
+        await FirebaseFirestore.instance.collection('users').doc(FUser).set({
+          'uid': FUser,
+          'nama': nama,
+          'email': email,
+          'password': password,
+        });
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+          content: Text('Register Berhasil, Silahkan ke Halaman Login'),
+          duration: Duration(seconds: 5),
+        ));
+      });
+    } on FirebaseAuthException catch (e) {
+      showDialog(
+          context: context,
+          builder: (ctx) => AlertDialog(
+                title: Text('Registrasi Failed'),
+                content: Text('${e.message}'),
+                actions: [
+                  TextButton(
+                    onPressed: () {
+                      Navigator.of(ctx).pop();
+                    },
+                    child: Text('Okay'),
+                  )
+                ],
+              ));
+    }
   }
 }
