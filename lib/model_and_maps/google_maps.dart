@@ -22,28 +22,49 @@ class MapSampleState extends State<MapSample> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: GoogleMap(
-        mapType: MapType.hybrid,
-        initialCameraPosition: CameraPosition(
-          target: LatLng(double.parse(widget.index), double.parse(widget.index1)),
-          zoom: 19.4746,
-        ),
-        onMapCreated: (GoogleMapController controller) {
-          setState(() {
-            _markers.add(
-              Marker(
-                markerId: MarkerId(widget.index2),
-                position: LatLng(double.parse(widget.index), double.parse(widget.index1)),
-                infoWindow: InfoWindow(
-                  title: widget.index2
-                )
-              )
-            );
-          });
-          _controller.complete(controller);
-        },
-        trafficEnabled: true,
-        markers: _markers,
+      body: Stack(
+        children: [
+          GoogleMap(
+            mapType: MapType.hybrid,
+            initialCameraPosition: CameraPosition(
+              target: LatLng(double.parse(widget.index), double.parse(widget.index1)),
+              zoom: 19.4746,
+            ),
+            onMapCreated: (GoogleMapController controller) {
+              setState(() {
+                _markers.add(
+                  Marker(
+                    markerId: MarkerId(widget.index2),
+                    position: LatLng(double.parse(widget.index), double.parse(widget.index1)),
+                    infoWindow: InfoWindow(
+                      title: widget.index2
+                    )
+                  )
+                );
+              });
+              _controller.complete(controller);
+            },
+            trafficEnabled: true,
+            markers: _markers,
+          ),
+          InkWell(
+            onTap: (){
+              Navigator.pop(context);
+            },
+            child: Padding(
+              padding: EdgeInsets.only(top: 50, left: 10),
+              child: Container(
+                width: 30,
+                height: 30,
+                decoration: BoxDecoration(
+                    color: Colors.black26.withOpacity(0.4),
+                    borderRadius: BorderRadius.circular(15)
+                ),
+                child: Icon(Icons.arrow_back, color: Colors.white,),
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }

@@ -13,6 +13,9 @@ import 'package:wisata_kebumen/hotel/selectedhotel.dart';
 import 'package:wisata_kebumen/loading.dart';
 import 'package:wisata_kebumen/login_and_register/login.dart';
 import 'package:wisata_kebumen/model_and_maps/model.dart';
+import 'package:wisata_kebumen/new/hotel/detailhotel.dart';
+import 'package:wisata_kebumen/new/restoran/DetailRestoran.dart';
+import 'package:wisata_kebumen/new/wisata/detailwisata.dart';
 import 'package:wisata_kebumen/restoran/selectedrestoran.dart';
 import 'package:wisata_kebumen/wisata/selectedwisata.dart';
 
@@ -96,15 +99,15 @@ class _AppContainerState extends State<AppContainer> {
                                   sideBarOpen = false;
                                   selectedMenuItem = index;
                                   setSidebarState();
-                                  // ScaffoldMessenger.of(context)
-                                  //     .showSnackBar(SnackBar(
-                                  //   content: Text('Menu Masih Dalam Tahap Pembuatan'),
-                                  //   duration: Duration(seconds: 3),
-                                  // ));
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(builder: (context)=> coba[index])
-                                  );
+                                  ScaffoldMessenger.of(context)
+                                      .showSnackBar(SnackBar(
+                                    content: Text('Menu Masih Dalam Tahap Pembuatan'),
+                                    duration: Duration(seconds: 3),
+                                  ));
+                                  // Navigator.push(
+                                  //   context,
+                                  //   MaterialPageRoute(builder: (context)=> coba[index])
+                                  // );
                                 },
                                 child: MenuItem(
                                     selectedMenuItem,
@@ -297,7 +300,8 @@ class _AppContainerState extends State<AppContainer> {
                   //pageview
                   SizedBox(
                     height: 240,
-                    child: TabBarView(children: [
+                    child: TabBarView(
+                      children: [
                       StreamBuilder(
                         stream: _stream.getStreamWisata(),
                         builder: (BuildContext context,
@@ -325,7 +329,9 @@ class _AppContainerState extends State<AppContainer> {
                                           image: DecorationImage(
                                             image: NetworkImage(document['foto'],
                                                 scale: 1.0),
-                                          )),
+                                            fit: BoxFit.fill
+                                          )
+                                      ),
                                       child: Stack(
                                         children: [
                                           Positioned(
@@ -406,6 +412,7 @@ class _AppContainerState extends State<AppContainer> {
                                           image: DecorationImage(
                                             image: NetworkImage(document['foto'],
                                                 scale: 1.0),
+                                            fit: BoxFit.cover
                                           )),
                                       child: Stack(
                                         children: [
@@ -568,6 +575,7 @@ class _AppContainerState extends State<AppContainer> {
                                           image: DecorationImage(
                                             image: NetworkImage(document['foto'],
                                                 scale: 1.0),
+                                            fit: BoxFit.fill
                                           )),
                                       child: Stack(
                                         children: [
@@ -803,6 +811,18 @@ class _AppContainerState extends State<AppContainer> {
                   SizedBox(
                     height: 30,
                   ),
+                  // ElevatedButton(onPressed: (){
+                  //   Navigator.push(context, MaterialPageRoute(builder: (context)=>DetailWisata()));
+                  // }, child: Text('detail')
+                  // ),
+                  // ElevatedButton(onPressed: (){
+                  //   Navigator.push(context, MaterialPageRoute(builder: (context)=>DetailRestoran()));
+                  // }, child: Text('detail restoran')
+                  // ),
+                  // ElevatedButton(onPressed: (){
+                  //   Navigator.push(context, MaterialPageRoute(builder: (context)=>DetailHotel()));
+                  // }, child: Text('detail hotel')
+                  // )
                 ],
               ),
             )

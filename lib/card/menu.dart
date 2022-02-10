@@ -12,7 +12,7 @@ class MenuItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: selected == position ? Color(0xff99BCFC) : Color(0xff69BCFC),
+      color: selected == position ? Color(0xff3bb2ff) : Color(0xff69BCFC),
       child: Row(
         children: [
           Container(

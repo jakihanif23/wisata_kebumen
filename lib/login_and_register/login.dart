@@ -1,14 +1,15 @@
 import 'dart:async';
 
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter/material.dart';
-import 'package:wisata_kebumen/homepage/homepage.dart';
 import 'package:wisata_kebumen/login_and_register/auth_service.dart';
 import 'package:wisata_kebumen/login_and_register/register.dart';
 import 'package:wisata_kebumen/login_and_register/widget.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:wisata_kebumen/new/mainpage.dart';
 
 class Login extends StatefulWidget {
   @override
@@ -168,10 +169,10 @@ class _LoginState extends State<Login> {
                                   password: passwordController.text,
                                   context: context);
                               if (user != null) {
+                                Navigator.of(context).pop();
                                 Navigator.of(context).pushReplacement(
                                     MaterialPageRoute(
-                                        builder: (context) => HomePage()));
-                                print(user);
+                                        builder: (context) => Home()));
                               } else {
                                 ScaffoldMessenger.of(context)
                                     .showSnackBar(SnackBar(
@@ -188,8 +189,9 @@ class _LoginState extends State<Login> {
                               style: GoogleFonts.openSans(fontSize: 20),
                             ),
                             style: ButtonStyle(
-                                backgroundColor: MaterialStateProperty.all<Color>(
-                                    Color(0xff69BCFC)),
+                                backgroundColor:
+                                    MaterialStateProperty.all<Color>(
+                                        Color(0xff69BCFC)),
                                 shape: MaterialStateProperty.all<StadiumBorder>(
                                     StadiumBorder())),
                           ),
@@ -202,45 +204,44 @@ class _LoginState extends State<Login> {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
-                            Text('Or'),
+                            Text('Login With'),
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                               children: [
                                 Container(
                                     child: IconButton(
                                   onPressed: () async {
-                                    try{
-                                      await authService.signInGoogle().then((value) async {
-                                        var FLUser = FirebaseAuth.instance.currentUser;
+                                    try {
+                                      await authService
+                                          .signInGoogle()
+                                          .then((value) async {
+                                        var FLUser =
+                                            FirebaseAuth.instance.currentUser;
                                         var FUser = FLUser!.uid;
-                                        var auth = FirebaseFirestore.instance.collection('users').doc(FUser);
+                                        var auth = FirebaseFirestore.instance
+                                            .collection('users')
+                                            .doc(FUser);
                                         await auth.set({
-                                          'uid' : FUser,
-                                          'nama' : FLUser.displayName,
-                                          'email' : FLUser.email,
+                                          'uid': FUser,
+                                          'nama': FLUser.displayName,
+                                          'email': FLUser.email,
                                         });
-                                        print(FUser);
+                                        Navigator.of(context).pop();
                                         Navigator.of(context).pushReplacement(
                                             MaterialPageRoute(
-                                                builder: (context) => HomePage()));
+                                                builder: (context) => Home()));
                                       });
-                                    } catch(e){
+                                    } catch (e) {
                                       print(e.toString());
                                     }
                                   },
-                                  icon: Image.network(
-                                      'http://pngimg.com/uploads/google/google_PNG19635.png'),
+                                  icon: CachedNetworkImage(
+                                    imageUrl:
+                                        'http://pngimg.com/uploads/google/google_PNG19635.png',
+                                  ),
                                   iconSize: 50,
                                 )),
-                                Container(
-                                    child: IconButton(
-                                  onPressed: () {
-                                    print('Facebook Sign In');
-                                  },
-                                  icon: Image.network(
-                                      'https://image.similarpng.com/very-thumbnail/2020/04/Popular-facebook-Logo-png.png'),
-                                  iconSize: 50,
-                                )),
+
                               ],
                             )
                           ],
