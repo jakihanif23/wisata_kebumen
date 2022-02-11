@@ -7,7 +7,6 @@ import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import 'package:tab_indicator_styler/tab_indicator_styler.dart';
 import 'package:wisata_kebumen/card/ItemCard.dart';
 import 'package:wisata_kebumen/model_and_maps/google_maps.dart';
-import 'package:wisata_kebumen/wisata/komentar_wisata.dart';
 
 class DetailWisata extends StatefulWidget {
   DetailWisata({required this.index});
@@ -43,6 +42,7 @@ class _DetailWisataState extends State<DetailWisata> {
                 children: [
                   Stack(
                     children: [
+                      //Image ListView
                       Container(
                         height: MediaQuery.of(context).size.height *0.45,
                         child: ListView.builder(
@@ -66,6 +66,7 @@ class _DetailWisataState extends State<DetailWisata> {
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
+                          //back button
                           InkWell(
                             onTap: (){
                               Navigator.pop(context);
@@ -83,13 +84,16 @@ class _DetailWisataState extends State<DetailWisata> {
                               ),
                             ),
                           ),
+                          //maps button
                           Container(
                             alignment: Alignment.bottomRight,
                             width: MediaQuery.of(context).size.width,
                             height: MediaQuery.of(context).size.height * 0.347,
                             child: InkWell(
                               onTap: (){
-                                Navigator.pop(context);
+                                Navigator.of(context).push(
+                                  MaterialPageRoute(builder: (context)=>MapSample(index: wisataDoc['lat'], index1: wisataDoc['lang'], index2: wisataDoc['nama']))
+                                );
                               },
                               child: Padding(
                                 padding: EdgeInsets.only(top: 50, left: 10, right: 10, bottom: 25),
@@ -146,142 +150,10 @@ class _DetailWisataState extends State<DetailWisata> {
                                       }
                                   ),
                                   SizedBox(width: 10,),
-                                  Text(hasil.toString(), style: TextStyle(fontSize: 15),)
+                                  Text(hasil.toString().substring(0,3), style: TextStyle(fontSize: 15),)
                                 ],
                               ),
                               SizedBox(height: 5,),
-                              // Row(
-                              //   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                              //   children: [
-                              //     ElevatedButton(
-                              //       onPressed: (){
-                              //         Navigator.push(
-                              //             context,
-                              //             MaterialPageRoute(
-                              //                 builder: (context) {
-                              //                   return MapSample(
-                              //                     index: wisataDoc['lat'],
-                              //                     index1: wisataDoc['lang'],
-                              //                     index2: wisataDoc['nama'],);
-                              //                 }));
-                              //       },
-                              //       child: Row(
-                              //         mainAxisAlignment: MainAxisAlignment.start,
-                              //         children: [
-                              //           Icon(Icons.fmd_good_rounded),
-                              //           SizedBox(width: 5,),
-                              //           Text('Lokasi')
-                              //         ],
-                              //       ),
-                              //     ),
-                              //     ElevatedButton(
-                              //       onPressed: (){
-                              //         User? user = FirebaseAuth.instance.currentUser;
-                              //         if (user == null) {
-                              //           showDialog(
-                              //               context: context,
-                              //               builder: (context){
-                              //                 return AlertDialog(
-                              //                   title: Text('Komentar'),
-                              //                   content: Text('Anda Belum Login, Silahkan Login Terlebih Dahulu'),
-                              //                   actions: [
-                              //                     TextButton(
-                              //                         onPressed: () => Navigator.pop(context, 'OK'),
-                              //                         child: Text('Oke'))
-                              //                   ],
-                              //                 );
-                              //               });
-                              //         }else{
-                              //           print(user);
-                              //           showDialog(
-                              //               context: context,
-                              //               builder: (context) {
-                              //                 double wasd = 0.0;
-                              //                 return AlertDialog(
-                              //                   title: Text('Komentar'),
-                              //                   content: SingleChildScrollView(
-                              //                     child: Container(
-                              //                       height: 200,
-                              //                       child: Column(
-                              //                         children: [
-                              //                           TextField(
-                              //                             controller:
-                              //                             komentarController,
-                              //                             autofocus: true,
-                              //                             decoration: InputDecoration(
-                              //                                 hintText:
-                              //                                 'Masukkan Komentar',
-                              //                                 labelText:
-                              //                                 'Masukkan Komentar'),
-                              //                           ),
-                              //                           SizedBox(
-                              //                             height: 30,
-                              //                           ),
-                              //                           RatingBar.builder(
-                              //                               initialRating: this.rating,
-                              //                               minRating: 1,
-                              //                               updateOnDrag: true,
-                              //                               allowHalfRating: true,
-                              //                               itemBuilder: (context,
-                              //                                   _) =>
-                              //                                   Icon(
-                              //                                     Icons.star,
-                              //                                     color: Colors.amber,
-                              //                                   ),
-                              //                               onRatingUpdate:
-                              //                                   (rating) =>
-                              //                                   setState(() {
-                              //                                     this.rating = rating;
-                              //                                   })),
-                              //                         ],
-                              //                       ),
-                              //                     ),
-                              //                   ),
-                              //                   actions: [
-                              //                     TextButton(
-                              //                         onPressed: () {
-                              //                           Navigator.pop(context);
-                              //                           setState(() {
-                              //                             komen =
-                              //                                 komentarController.text;
-                              //                           });
-                              //                           wisataRef
-                              //                               .doc(wis)
-                              //                               .collection('Komentar')
-                              //                               .doc(user.uid)
-                              //                               .set({
-                              //                             'nama_user':
-                              //                             '${user.displayName}',
-                              //                             'uid': '${user.uid}',
-                              //                             'komentar': '${komen}',
-                              //                             'rating': this.rating
-                              //                           });
-                              //                           komentarController.clear();
-                              //                           ScaffoldMessenger.of(context)
-                              //                               .showSnackBar(SnackBar(
-                              //                             content: Text(
-                              //                                 'Berhasil Menambahkan Komentar'),
-                              //                             duration:
-                              //                             Duration(seconds: 5),
-                              //                           ));
-                              //                         },
-                              //                         child: Text('Input'))
-                              //                   ],
-                              //                 );
-                              //               });
-                              //         }
-                              //       },
-                              //       child: Row(
-                              //         mainAxisAlignment: MainAxisAlignment.start,
-                              //         children: [
-                              //           Icon(Icons.add_comment),
-                              //           SizedBox(width: 5,),
-                              //           Text('Komentar')
-                              //         ],
-                              //       ),
-                              //     )
-                              //   ],
-                              // )
                             ],
                           ),
                         );
@@ -297,6 +169,7 @@ class _DetailWisataState extends State<DetailWisata> {
                           height: MediaQuery.of(context).size.height *0.44,
                           child: TabBarView(
                             children: [
+                              //deskripsi page
                               Container(
                                 padding: EdgeInsets.only(top : 10,left: 20, right: 25, bottom: 20),
                                 child: ListView(
@@ -312,8 +185,9 @@ class _DetailWisataState extends State<DetailWisata> {
                                   ],
                                 ),
                               ),
+                              //harga page
                               Container(
-                                padding: EdgeInsets.only(top : 10,left: 20, right: 25, bottom: 20),
+                                padding: EdgeInsets.only(top : 17,left: 20, right: 25, bottom: 20),
                                 child: RichText(
                                   text: TextSpan(
                                     style: TextStyle(
@@ -321,15 +195,19 @@ class _DetailWisataState extends State<DetailWisata> {
                                     ),
                                     children: [
                                       TextSpan(
-                                        text: 'Untuk Harga Tiketnya Perorang \n\n'
+                                        text: 'Untuk Harga Tiket Perorangnya Dikenai '
                                       ),
                                       TextSpan(
-                                        text: wisataDoc['tiket']
+                                        text: 'Rp. ${wisataDoc['tiket']}'
+                                      ),
+                                      TextSpan(
+                                          text: ' ${wisataDoc['tiket_t']}'
                                       )
                                     ]
                                   ),
                                 )
                               ),
+                              // komentar page
                               Container(
                                 padding: EdgeInsets.only(top: 10),
                                 child: ListView(
@@ -343,8 +221,6 @@ class _DetailWisataState extends State<DetailWisata> {
                                             child: CircularProgressIndicator(),
                                           );
                                         } else{
-                                          var wasd = snapshot.data!.docs.length;
-                                          print(wasd);
                                           return Column(
                                             children: [
                                               Container(
@@ -352,6 +228,28 @@ class _DetailWisataState extends State<DetailWisata> {
                                                 child: ElevatedButton(
                                                   onPressed: (){
                                                     User? user = FirebaseAuth.instance.currentUser;
+                                                    kom.where('uid', isEqualTo: user!.uid).get().then((QuerySnapshot querySnapshot) {
+                                                      querySnapshot.docs.forEach((element) {
+                                                        if(element['uid'] == null){
+                                                          showDialog(
+                                                              context: context,
+                                                              builder: (context){
+                                                                return AlertDialog(
+                                                                  title: Text('Komentar'),
+                                                                  content: Text('Anda Belum Login, Silahkan Login Terlebih Dahulu'),
+                                                                  actions: [
+                                                                    TextButton(
+                                                                        onPressed: () => Navigator.pop(context, 'OK'),
+                                                                        child: Text('Oke'))
+                                                                  ],
+                                                                );
+                                                              });
+                                                        }
+                                                        komen = element['komentar'] ?? '';
+                                                        rating = element['rating'] ?? 0.0;
+                                                        komentarController.text = komen;
+                                                      });
+                                                    });
                                                     if (user == null) {
                                                       showDialog(
                                                           context: context,
@@ -367,7 +265,6 @@ class _DetailWisataState extends State<DetailWisata> {
                                                             );
                                                           });
                                                     }else{
-                                                      print(user);
                                                       showDialog(
                                                           context: context,
                                                           builder: (context) {
@@ -417,8 +314,7 @@ class _DetailWisataState extends State<DetailWisata> {
                                                                     onPressed: () {
                                                                       Navigator.pop(context);
                                                                       setState(() {
-                                                                        komen =
-                                                                            komentarController.text;
+                                                                        komen = komentarController.text;
                                                                       });
                                                                       wisataRef
                                                                           .doc(widget.index)

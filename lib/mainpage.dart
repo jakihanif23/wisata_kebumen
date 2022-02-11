@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:wisata_kebumen/new/account/account.dart';
-import 'package:wisata_kebumen/new/homepage/newhome.dart';
-import 'package:wisata_kebumen/new/populer/populer.dart';
+import 'package:wisata_kebumen/account/account.dart';
+import 'package:wisata_kebumen/homepage/newhome.dart';
 
 class Home extends StatefulWidget {
 
@@ -13,8 +12,7 @@ class Home extends StatefulWidget {
 class _HomeState extends State<Home> {
   List pages = [
     NewHomepage(),
-    Populer(),
-    Account()
+    Account(),
   ];
 
   int current = 0;
@@ -53,12 +51,8 @@ class _HomeState extends State<Home> {
               label: "Home"
             ),
             BottomNavigationBarItem(
-              icon: Icon(Icons.view_list_rounded),
-              label: "Favorite"
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.account_circle_rounded),
-              label: "Account"
+                icon: Icon(Icons.account_circle_rounded),
+                label: "Account"
             ),
           ],
         ),

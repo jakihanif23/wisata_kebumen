@@ -9,7 +9,7 @@ import 'package:wisata_kebumen/login_and_register/auth_service.dart';
 import 'package:wisata_kebumen/login_and_register/register.dart';
 import 'package:wisata_kebumen/login_and_register/widget.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:wisata_kebumen/new/mainpage.dart';
+import 'package:wisata_kebumen/mainpage.dart';
 
 class Login extends StatefulWidget {
   @override
