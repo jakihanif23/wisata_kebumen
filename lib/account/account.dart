@@ -147,7 +147,6 @@ class _AccountState extends State<Account> {
                               actions: [
                                 TextButton(
                                     onPressed: () async {
-                                      Navigator.pop(context);
                                       setState(() {
                                         nama = namacontroller.text;
                                       });
@@ -159,15 +158,19 @@ class _AccountState extends State<Account> {
                                         'uid': '${uid}'
                                       });
                                       namacontroller.clear();
+                                      Navigator.of(context).pop();
+                                      Navigator.of(context).pushReplacement(
+                                          MaterialPageRoute(builder: (context)=>Home())
+                                      );
                                       ScaffoldMessenger.of(context)
                                           .showSnackBar(SnackBar(
                                         content: Text(
-                                            'Berhasil Menambahkan Komentar'),
+                                            'Berhasil Mengubah Data'),
                                         duration:
-                                        Duration(seconds: 5),
+                                        Duration(seconds: 2),
                                       ));
                                     },
-                                    child: Text('Input'))
+                                    child: Text('Ubah'))
                               ],
                             );
                           });
