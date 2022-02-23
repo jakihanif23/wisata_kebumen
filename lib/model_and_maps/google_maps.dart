@@ -25,10 +25,10 @@ class MapSampleState extends State<MapSample> {
       body: Stack(
         children: [
           GoogleMap(
-            mapType: MapType.hybrid,
+            mapType: MapType.normal,
             initialCameraPosition: CameraPosition(
               target: LatLng(double.parse(widget.index), double.parse(widget.index1)),
-              zoom: 19.4746,
+              zoom: 16.0,
             ),
             onMapCreated: (GoogleMapController controller) {
               setState(() {
